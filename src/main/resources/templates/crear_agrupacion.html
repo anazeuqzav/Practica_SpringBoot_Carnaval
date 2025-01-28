@@ -23,11 +23,6 @@
   </select>
   <p th:if="${#fields.hasErrors('modalidad')}" th:errors="*{modalidad}"></p>
 
-  <!-- Número de componentes -->
-  <label for="numeroDeComponentes">Número de Componentes:</label>
-  <input type="number" id="numeroDeComponentes" th:field="*{numeroDeComponentes}" min="1" required>
-  <p th:if="${#fields.hasErrors('numeroDeComponentes')}" th:errors="*{numeroDeComponentes}"></p>
-
   <!-- Localidad -->
   <label for="localidad">Localidad:</label>
   <input type="text" id="localidad" th:field="*{localidad}" required>

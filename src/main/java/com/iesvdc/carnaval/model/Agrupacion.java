@@ -20,8 +20,8 @@ public class Agrupacion {
     @Column(name = "modalidad")
     private Modalidad modalidad;
 
-    @Column(name = "numero_de_componentes")// cambiar a enum
-    private Integer numeroDeComponentes;
+    @Column(name = "numero_de_componentes")
+    private Integer numeroDeComponentes = 0;
 
     @Column(name = "localidad")
     private String localidad;
@@ -125,5 +125,19 @@ public class Agrupacion {
 
     public void setPuntuaciones(List<Puntuacion> puntuaciones) {
         this.puntuaciones = puntuaciones;
+    }
+
+    @Override
+    public String toString() {
+        return "Agrupacion{" +
+                "id=" + id +
+                ", nombre='" + nombre + '\'' +
+                ", modalidad=" + modalidad +
+                ", numeroDeComponentes=" + numeroDeComponentes +
+                ", localidad='" + localidad + '\'' +
+                ", director=" + director +
+                ", componentes=" + componentes +
+                ", puntuaciones=" + puntuaciones +
+                '}';
     }
 }

@@ -20,10 +20,10 @@ public class Componente {
     private String rol;
 
     @Column(name = "instrumento")
-    private String instrumento; // opcional
+    private String instrumento = null; // opcional
 
     @OneToOne(mappedBy = "director")
-    private Agrupacion agrupacionDirigida; // relacion muchos a 1
+    private Agrupacion agrupacionDirigida = null;
 
     @ManyToOne
     @JoinColumn(name = "agrupacion_id")
@@ -80,5 +80,21 @@ public class Componente {
 
     public void setInstrumento(String instrumento) {
         this.instrumento = instrumento;
+    }
+
+    public Agrupacion getAgrupacionDirigida() {
+        return agrupacionDirigida;
+    }
+
+    public void setAgrupacionDirigida(Agrupacion agrupacionDirigida) {
+        this.agrupacionDirigida = agrupacionDirigida;
+    }
+
+    public Agrupacion getAgrupacion() {
+        return agrupacion;
+    }
+
+    public void setAgrupacion(Agrupacion agrupacion) {
+        this.agrupacion = agrupacion;
     }
 }

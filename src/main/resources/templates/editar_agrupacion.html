@@ -12,13 +12,17 @@
     <input type="text" id="nombre" th:field="*{nombre}">
     <p th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></p>
 
+    <!-- Modalidad -->
     <label for="modalidad">Modalidad:</label>
-    <input type="text" id="modalidad" th:field="*{modalidad}">
+    <select id="modalidad" th:field="*{modalidad}" required>
+        <option value="" disabled selected>Seleccione una modalidad</option>
+        <option value="Chirigota">Chirigota</option>
+        <option value="Comparsa">Comparsa</option>
+        <option value="Coro">Coro</option>
+        <option value="Cuarteto">Cuarteto</option>
+    </select>
     <p th:if="${#fields.hasErrors('modalidad')}" th:errors="*{modalidad}"></p>
 
-    <label for="numeroDeComponentes">Número de Componentes:</label>
-    <input type="number" id="numeroDeComponentes" th:field="*{numeroDeComponentes}">
-    <p th:if="${#fields.hasErrors('numeroDeComponentes')}" th:errors="*{numeroDeComponentes}"></p>
 
     <label for="localidad">Localidad:</label>
     <input type="text" id="localidad" th:field="*{localidad}">

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Editar Componente</title>
+</head>
+<body>
+<h1 th:text="'Editar Componente: ' + ${componente.nombre}"></h1>
+
+<!-- Formulario para editar el componente -->
+<form th:action="@{/componente/editar}" th:object="${componente}" method="post">
+  <!-- ID del componente (oculto) -->
+  <input type="hidden" th:field="*{id}" />
+
+  <!-- Nombre -->
+  <label for="nombre">Nombre:</label>
+  <input type="text" id="nombre" th:field="*{nombre}" required />
+  <br>
+
+  <!-- Edad -->
+  <label for="edad">Edad:</label>
+  <input type="number" id="edad" th:field="*{edad}" min="1" required />
+  <br>
+
+  <!-- Rol -->
+  <label for="rol">Rol:</label>
+  <input type="text" id="rol" th:field="*{rol}" required />
+  <br>
+
+  <!-- Instrumento -->
+  <label for="instrumento">Instrumento:</label>
+  <input type="text" id="instrumento" th:field="*{instrumento}" />
+  <br>
+
+  <!-- Agrupación -->
+  <label for="agrupacion">Agrupación:</label>
+  <select id="agrupacion" th:field="*{agrupacion.id}">
+    <option th:each="agrupacion : ${agrupaciones}" th:value="${agrupacion.id}"
+            th:text="${agrupacion.nombre}" th:selected="${agrupacion.id == componente.agrupacion?.id}">
+    </option>
+  </select>
+  <br>
+
+  <!-- Botón para guardar -->
+  <button type="submit">Guardar Cambios</button>
+</form>
+
+<!-- Enlace para volver -->
+<a th:href="@{/agrupaciones}">Cancelar</a>
+</body>
+</html>

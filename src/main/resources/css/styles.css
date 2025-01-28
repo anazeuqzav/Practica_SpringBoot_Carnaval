@@ -1,0 +1,65 @@
+/* Estilos globales */
+body {
+    font-family: Poppins, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f7f7f7;
+    color: #333;
+}
+
+a {
+    color: #ff5733; /* Naranja */
+    text-decoration: none;
+    font-weight: 600;
+    margin: 10px;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: #c0392b; /* Rojo */
+}
+
+/* Header */
+header {
+    display: flex;
+    font-family: Belanosima, sans-serif
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: #fcd7ff; /* Azul */
+    color: #bb5edb;
+}
+
+header img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+}
+
+header h1 {
+    font-family: 'Anton', sans-serif;
+    font-size: 2.5rem;
+    text-align: center;
+    flex-grow: 1;
+    margin: 0;
+}
+
+/* Enlaces de la página */
+a {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.1rem;
+}
+
+/* Estilos para mejorar la estructura */
+body {
+    padding: 20px;
+}
+
+header {
+    margin-bottom: 20px;
+}
+
+a {
+    display: inline-block;
+    margin-top: 10px;
+}

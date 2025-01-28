@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Detalle de Componente</title>
+</head>
+<body>
+<h1 th:text="'Detalle del Componente: ' + ${componente.nombre}"></h1>
+
+<!-- Información del componente -->
+<p><strong>Nombre:</strong> <span th:text="${componente.nombre}"></span></p>
+<p><strong>Edad:</strong> <span th:text="${componente.edad}"></span></p>
+<p><strong>Rol:</strong> <span th:text="${componente.rol}"></span></p>
+<p><strong>Instrumento:</strong>
+    <span th:text="${componente.instrumento != null ? componente.instrumento : 'No especificado'}"></span>
+</p>
+<p><strong>Agrupación:</strong>
+    <span th:text="${componente.agrupacion != null ? componente.agrupacion.nombre : 'Sin agrupación'}"></span>
+</p>
+<p><strong>Dirige la agrupación:</strong>
+    <span th:text="${componente.agrupacionDirigida != null ? componente.agrupacionDirigida.nombre : 'No es director'}"></span>
+</p>
+
+<!-- Enlaces -->
+
+<a href="/">Volver al Inicio</a>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Añadir Componente</title>
+</head>
+<body>
+<h1>Añadir Componente</h1>
+<form th:action="@{/componente/guardar}" th:object="${componente}" method="post">
+  <!-- Campo oculto para asociar el componente a la agrupación -->
+  <input type="hidden" th:field="*{agrupacion.id}">
+
+  <label for="nombre">Nombre:</label>
+  <input type="text" id="nombre" th:field="*{nombre}">
+  <p th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></p>
+
+  <label for="edad">Edad:</label>
+  <input type="number" id="edad" th:field="*{edad}">
+  <p th:if="${#fields.hasErrors('edad')}" th:errors="*{edad}"></p>
+
+  <label for="rol">Rol:</label>
+  <input type="text" id="rol" th:field="*{rol}">
+  <p th:if="${#fields.hasErrors('rol')}" th:errors="*{rol}"></p>
+
+  <label for="instrumento">Instrumento:</label>
+  <input type="text" id="instrumento" th:field="*{instrumento}">
+  <p th:if="${#fields.hasErrors('instrumento')}" th:errors="*{instrumento}"></p>
+
+  <button type="submit">Guardar</button>
+</form>
+<a th:href="@{/agrupacion/{id}(id=${agrupacion.id})}">Cancelar</a>
+</body>
+</html>

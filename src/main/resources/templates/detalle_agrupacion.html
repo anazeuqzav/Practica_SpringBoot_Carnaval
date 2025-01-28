@@ -24,6 +24,7 @@
         <th>Edad</th>
         <th>Rol</th>
         <th>Instrumento</th>
+        <th>Acciones</th>
     </tr>
     </thead>
     <tbody>
@@ -33,13 +34,19 @@
         <td th:text="${componente.edad}"></td>
         <td th:text="${componente.rol}"></td>
         <td th:text="${componente.instrumento != null ? componente.instrumento : 'N/A'}"></td>
+
+        <td>
+            <a th:href="@{/componente/{id}(id=${componente.id})}">Ver</a>
+            <a th:href="@{/componente/editar/{id}(id=${componente.id})}">Editar</a>
+            <form th:action="@{/componente/eliminar/{id}(id=${componente.id})}" method="post" style="display:inline;">
+                <button type="submit" onclick="return confirm('¿Estás segura de eliminar este componente?');">Eliminar</button>
+            </form>
+        </td>
     </tr>
     </tbody>
 </table>
 <!-- Añadir componente -->
 <a th:href="@{/componente/nuevo(idAgrupacion=${agrupacion.id})}">Añadir Componente</a>
-
-
 
 <!-- Tabla de Puntuaciones -->
 <h2>Puntuaciones</h2>
@@ -48,15 +55,28 @@
     <tr>
         <th>Fase</th>
         <th>Puntos</th>
+        <th>Acciones</th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="puntuacion : ${puntuaciones}">
         <td th:text="${puntuacion.fase}"></td>
         <td th:text="${puntuacion.puntos}"></td>
+        <!--
+        <td>
+            <a th:href="@{/componente/{id}(id=${componente.id})}">Ver</a>
+            <a th:href="@{/componente/editar/{id}(id=${componente.id})}">Editar</a>
+            <form th:action="@{/componente/eliminar/{id}(id=${componente.id})}" method="post" style="display:inline;">
+                <button type="submit" onclick="return confirm('¿Estás segura de eliminar este componente?');">Eliminar</button>
+            </form>
+        </td>-->
     </tr>
+
     </tbody>
 </table>
+
+<!-- Añadir puntuacion -->
+<a th:href="@{/puntuacion/nuevo(idAgrupacion=${agrupacion.id})}">Añadir Puntuacion</a>
 
 <!-- Enlace para volver -->
 <a href="/">Volver al Inicio</a>

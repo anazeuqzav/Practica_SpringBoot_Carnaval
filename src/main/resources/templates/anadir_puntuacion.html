@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Añadir Puntuación</title>
+</head>
+<body>
+<h1>Añadir Puntuación</h1>
+<form th:action="@{/puntuacion/guardar}" th:object="${puntuacion}" method="post">
+  <!-- Campo oculto para asociar la puntuación a la agrupación -->
+  <input type="hidden" th:field="*{agrupacion.id}">
+
+  <label for="fase">Fase:</label>
+  <select id="fase" th:field="*{fase}">
+    <option value="" disabled selected>Selecciona una fase</option>
+    <option th:each="fase : ${fases}" th:value="${fase}" th:text="${fase}"></option>
+  </select>
+  <p th:if="${#fields.hasErrors('fase')}" th:errors="*{fase}"></p>
+
+  <label for="puntos">Puntos:</label>
+  <input type="number" id="puntos" th:field="*{puntos}" step="0.01" min="0">
+  <p th:if="${#fields.hasErrors('puntos')}" th:errors="*{puntos}"></p>
+
+  <button type="submit">Guardar</button>
+</form>
+<a th:href="@{/agrupacion/{id}(id=${agrupacion.id})}">Cancelar</a>
+</body>
+</html>
