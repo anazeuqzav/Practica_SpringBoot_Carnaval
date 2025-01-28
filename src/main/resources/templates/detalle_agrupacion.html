@@ -62,14 +62,14 @@
     <tr th:each="puntuacion : ${puntuaciones}">
         <td th:text="${puntuacion.fase}"></td>
         <td th:text="${puntuacion.puntos}"></td>
-        <!--
+
         <td>
-            <a th:href="@{/componente/{id}(id=${componente.id})}">Ver</a>
-            <a th:href="@{/componente/editar/{id}(id=${componente.id})}">Editar</a>
-            <form th:action="@{/componente/eliminar/{id}(id=${componente.id})}" method="post" style="display:inline;">
+            <a th:href="@{/puntuacion/{id}(id=${puntuacion.id})}">Ver</a>
+            <a th:href="@{/puntuacion/editar/{id}(id=${puntuacion.id})}">Editar</a>
+            <form th:action="@{/puntuacion/eliminar/{id}(id=${puntuacion.id})}" method="post" style="display:inline;">
                 <button type="submit" onclick="return confirm('¿Estás segura de eliminar este componente?');">Eliminar</button>
             </form>
-        </td>-->
+        </td>
     </tr>
 
     </tbody>

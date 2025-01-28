@@ -9,10 +9,9 @@ import com.iesvdc.carnaval.service.PuntuacionService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 /**
  * Manejo de las peticions HTTP
@@ -51,5 +50,47 @@ public class PuntuacionController {
         model.addAttribute("mensaje", "Puntuacion creada correctamente");
         return "redirect:/agrupaciones";
     }
+
+    // Ver detalle del puntuacion
+    @GetMapping("/puntuacion/{id}")
+    public String mostrarDetallePuntuacion(@PathVariable("id") Long id, Model model) {
+        Optional<Puntuacion> puntuacionOptional = puntuacionService.obtenerPuntuacionPorId(id);
+        if (puntuacionOptional.isPresent()) {
+            model.addAttribute("puntuacion", puntuacionOptional.get());
+            return "detalle_puntuacion";
+        } else {
+            // Redirigir a un error o página de inicio si no se encuentra el componente
+            return "redirect:/";
+        }
+    }
+
+    // Formulario para editar componente
+    @GetMapping("/puntuacion/editar/{id}")
+    public String mostrarFormularioEditarPuntuacion(@PathVariable Long id, Model model) {
+        Optional <Puntuacion> puntuacionOptional = puntuacionService.obtenerPuntuacionPorId(id);
+        if (puntuacionOptional.isPresent()) {
+            model.addAttribute("puntuacion", puntuacionOptional.get());
+            model.addAttribute("agrupaciones", agrupacionService.listarAgrupaciones());
+            return "editar_puntuacion";
+        } else {
+            return "redirect:/";
+        }
+    }
+
+    // Manejar editar componente
+    @PostMapping("/puntuacion/editar")
+    public String guardarCambios(@ModelAttribute Puntuacion puntuacion) {
+        puntuacionService.guardarPuntuacion(puntuacion);
+        return "redirect:/";
+    }
+
+    // Eliminar una componente
+    @PostMapping("/puntuacion/eliminar/{id}")
+    public String eliminarPuntuacion(@PathVariable Long id, Model model) {
+        puntuacionService.eliminarPuntuacion(id);
+        model.addAttribute("mensaje", "Puntuacion eliminada correctamente");
+        return "redirect:/agrupaciones";
+    }
+
 
 }

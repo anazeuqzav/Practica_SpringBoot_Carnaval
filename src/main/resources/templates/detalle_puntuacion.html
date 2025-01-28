@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Detalle de Puntuación</title>
+</head>
+<body>
+<h1 th:text="'Detalle de la Puntuación: ' + ${puntuacion.id}"></h1>
+
+<!-- Información de la puntuación -->
+<p><strong>Fase:</strong> <span th:text="${puntuacion.fase}"></span></p>
+<p><strong>Puntos:</strong> <span th:text="${puntuacion.puntos}"></span></p>
+<p><strong>Agrupación:</strong>
+  <span th:text="${puntuacion.agrupacion != null ? puntuacion.agrupacion.nombre : 'Sin agrupación'}"></span>
+</p>
+
+<!-- Enlaces -->
+<a href="/">Volver al Inicio</a>
+</body>
+</html>

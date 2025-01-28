@@ -71,7 +71,7 @@ public class ComponenteController {
 
     // Formulario para editar componente
     @GetMapping("/componente/editar/{id}")
-    public String mostrarFormularioEditar(@PathVariable Long id, Model model) {
+    public String mostrarFormularioEditarComponente(@PathVariable Long id, Model model) {
         Optional<Componente> componenteOptional = componenteService.obtenerComponentePorId(id);
         if (componenteOptional.isPresent()) {
             model.addAttribute("componente", componenteOptional.get());
@@ -89,7 +89,7 @@ public class ComponenteController {
         return "redirect:/";
     }
 
-    // Eliminar una agrupación
+    // Eliminar una componente
     @PostMapping("/componente/eliminar/{id}")
     public String eliminarAgrupacion(@PathVariable Long id, Model model) {
        Optional<Componente> componenteOptional = componenteService.obtenerComponentePorId(id);
