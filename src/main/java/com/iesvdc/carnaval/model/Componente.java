@@ -1,14 +1,33 @@
 package com.iesvdc.carnaval.model;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "componentes")
 public class Componente {
     // Atributos
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
+    @Column(name = "nombre")
     private String nombre;
+
+    @Column(name = "edad")
     private Integer edad;
+
+    @Column(name = "rol")
     private String rol;
+
+    @Column(name = "instrumento")
     private String instrumento; // opcional
 
-    private Agrupacion agrupacion; // relacion muchos a 1
+    @OneToOne(mappedBy = "director")
+    private Agrupacion agrupacionDirigida; // relacion muchos a 1
+
+    @ManyToOne
+    @JoinColumn(name = "agrupacion_id")
+    private Agrupacion agrupacion;
 
     // Constructores
     public Componente() {

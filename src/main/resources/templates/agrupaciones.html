@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestion de agrupaciones</title>
+</head>
+<body>
+<h1>Gestion de Agrupaciones</h1>
+<table border="1">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>ID Director</th>
+        <th>Modalidad</th>
+        <th>Numero de Componentes</th>
+        <th>Localidad</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="agrupacion : ${agrupaciones}">
+        <td th:text="${agrupacion.id}"></td>
+        <td th:text="${agrupacion.nombre}"></td>
+       <td th:text="${agrupacion.director?.id}"></td>
+        <td th:text="${agrupacion.modalidad}"></td>
+        <td th:text="${agrupacion.numeroDeComponentes}"></td>
+        <td th:text="${agrupacion.localidad}"></td>
+
+        <td>
+            <a th:href="@{/agrupacion/{id}(id=${agrupacion.id})}">Ver</a>
+            <a th:href="@{/agrupacion/editar/{id}(id=${agrupacion.id})}">Editar</a>
+            <form th:action="@{/agrupacion/eliminar/{id}(id=${agrupacion.id})}" method="post" style="display:inline;">
+                <button type="submit" onclick="return confirm('¿Estás segura de eliminar esta agrupación?');">Eliminar</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<a href="/crear_agrupacion">Crear Agrupacion</a>
+<a href="/">Volver al Inicio</a>
+</body>
+</html>

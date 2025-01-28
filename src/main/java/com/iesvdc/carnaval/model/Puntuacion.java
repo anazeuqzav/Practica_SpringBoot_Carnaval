@@ -1,18 +1,31 @@
 package com.iesvdc.carnaval.model;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "puntuaciones")
 public class Puntuacion {
     // Atributos
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private String fase; // cambiar a enum
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "fase")// cambiar a enum
+    private Fase fase;
+
+    @Column(name = "puntos")
     private double puntos;
 
+    @ManyToOne
+    @JoinColumn(name = "agrupacion_id")
     private Agrupacion agrupacion;
 
     // Constructores
     public Puntuacion() {
     }
 
-    public Puntuacion(long id, String fase, double puntos, Agrupacion agrupacion) {
+    public Puntuacion(long id, Fase fase, double puntos, Agrupacion agrupacion) {
         this.id = id;
         this.fase = fase;
         this.puntos = puntos;
@@ -27,12 +40,20 @@ public class Puntuacion {
         this.id = id;
     }
 
-    public String getFase() {
+    public Fase getFase() {
         return fase;
     }
 
-    public void setFase(String fase) {
+    public void setFase(Fase fase) {
         this.fase = fase;
+    }
+
+    public Agrupacion getAgrupacion() {
+        return agrupacion;
+    }
+
+    public void setAgrupacion(Agrupacion agrupacion) {
+        this.agrupacion = agrupacion;
     }
 
     public double getPuntos() {

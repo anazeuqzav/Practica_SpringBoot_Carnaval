@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Detalle de Agrupación</title>
+</head>
+<body>
+<h1 th:text="'Detalle de Agrupación: ' + ${agrupacion.nombre}"></h1>
+
+<!-- Información general de la agrupación -->
+<p><strong>Modalidad:</strong> <span th:text="${agrupacion.modalidad}"></span></p>
+<p><strong>Localidad:</strong> <span th:text="${agrupacion.localidad}"></span></p>
+<p><strong>Número de Componentes:</strong> <span th:text="${agrupacion.numeroDeComponentes}"></span></p>
+<p><strong>Director:</strong>
+    <span th:text="${agrupacion.director != null ? agrupacion.director.nombre : 'Sin director asignado'}"></span>
+</p>
+
+<!-- Tabla de Componentes -->
+<h2>Componentes</h2>
+<table border="1">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Edad</th>
+        <th>Rol</th>
+        <th>Instrumento</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="componente : ${componentes}">
+        <td th:text="${componente.id}"></td>
+        <td th:text="${componente.nombre}"></td>
+        <td th:text="${componente.edad}"></td>
+        <td th:text="${componente.rol}"></td>
+        <td th:text="${componente.instrumento != null ? componente.instrumento : 'N/A'}"></td>
+    </tr>
+    </tbody>
+</table>
+<!-- Añadir componente -->
+<a th:href="@{/componente/nuevo(idAgrupacion=${agrupacion.id})}">Añadir Componente</a>
+
+
+
+<!-- Tabla de Puntuaciones -->
+<h2>Puntuaciones</h2>
+<table border="1">
+    <thead>
+    <tr>
+        <th>Fase</th>
+        <th>Puntos</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="puntuacion : ${puntuaciones}">
+        <td th:text="${puntuacion.fase}"></td>
+        <td th:text="${puntuacion.puntos}"></td>
+    </tr>
+    </tbody>
+</table>
+
+<!-- Enlace para volver -->
+<a href="/">Volver al Inicio</a>
+</body>
+</html>

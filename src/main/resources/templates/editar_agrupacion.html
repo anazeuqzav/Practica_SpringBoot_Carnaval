@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Editar Agrupación</title>
+</head>
+<body>
+<h1>Editar Agrupación</h1>
+<form th:action="@{/agrupacion/editar}" th:object="${agrupacion}" method="post">
+    <input type="hidden" th:field="*{id}">
+
+    <label for="nombre">Nombre:</label>
+    <input type="text" id="nombre" th:field="*{nombre}">
+    <p th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></p>
+
+    <label for="modalidad">Modalidad:</label>
+    <input type="text" id="modalidad" th:field="*{modalidad}">
+    <p th:if="${#fields.hasErrors('modalidad')}" th:errors="*{modalidad}"></p>
+
+    <label for="numeroDeComponentes">Número de Componentes:</label>
+    <input type="number" id="numeroDeComponentes" th:field="*{numeroDeComponentes}">
+    <p th:if="${#fields.hasErrors('numeroDeComponentes')}" th:errors="*{numeroDeComponentes}"></p>
+
+    <label for="localidad">Localidad:</label>
+    <input type="text" id="localidad" th:field="*{localidad}">
+    <p th:if="${#fields.hasErrors('localidad')}" th:errors="*{localidad}"></p>
+
+    <!-- Selección de director -->
+    <label for="director">Director:</label>
+    <select id="director" th:field="*{director}">
+        <option value="" disabled selected>Seleccione un director</option>
+        <option th:each="componente : ${componentes}"
+                th:value="${componente.id}"
+                th:text="${componente.nombre}"></option>
+    </select>
+    <p th:if="${#fields.hasErrors('director')}" th:errors="*{director}"></p>
+
+    <button type="submit">Guardar Cambios</button>
+</form>
+<a href="/agrupaciones">Volver a la Lista</a>
+</body>
+</html>
