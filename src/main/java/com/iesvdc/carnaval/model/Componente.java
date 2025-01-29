@@ -1,6 +1,7 @@
 package com.iesvdc.carnaval.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 
 @Entity
 @Table(name = "componentes")
@@ -13,6 +14,8 @@ public class Componente {
     @Column(name = "nombre")
     private String nombre;
 
+    @Min(value = 0, message = "La edad no puede ser negativa")
+    @Max(value = 100, message = "La edad no puede ser mayor de 100")
     @Column(name = "edad")
     private Integer edad;
 

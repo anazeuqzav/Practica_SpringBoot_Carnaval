@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+    <link rel="stylesheet" th:href="@{/css/styles.css}" />
     <title>Detalle de Agrupación</title>
 </head>
 <body>
@@ -45,8 +46,40 @@
     </tr>
     </tbody>
 </table>
-<!-- Añadir componente -->
-<a th:href="@{/componente/nuevo(idAgrupacion=${agrupacion.id})}">Añadir Componente</a>
+<<!-- Añadir componente -->
+<a th:href="@{/componente/nuevo(idAgrupacion=${agrupacion.id})}"
+   id="btnAgregarComponente"
+   th:data-num-componentes="${agrupacion.numeroDeComponentes}"
+   th:data-modalidad="${agrupacion.modalidad}">Añadir Componente</a>
+
+<p id="mensajeLimite" style="color: red; display: none;">No puedes añadir más componentes.</p>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const btnAgregar = document.getElementById("btnAgregarComponente");
+        const mensajeLimite = document.getElementById("mensajeLimite");
+
+        const numComponentes = parseInt(btnAgregar.getAttribute("data-num-componentes"), 10);
+        const modalidad = btnAgregar.getAttribute("data-modalidad");
+
+        // Definir los límites según la modalidad
+        const limites = {
+            "Chirigota": 12,
+            "Comparsa": 15,
+            "Coro": 45,
+            "Cuarteto": 4
+        };
+
+        const maxComponentes = limites[modalidad] || 15; // Valor por defecto en caso de modalidad desconocida
+
+        if (numComponentes >= maxComponentes) {
+            btnAgregar.style.pointerEvents = "none"; // Evita que se pueda hacer clic
+            btnAgregar.style.opacity = "0.5"; // Indica visualmente que está deshabilitado
+            mensajeLimite.style.display = "block"; // Muestra el mensaje de error
+            mensajeLimite.textContent = `No puedes añadir más componentes. Límite para ${modalidad}: ${maxComponentes}.`;
+        }
+    });
+</script>
 
 <!-- Tabla de Puntuaciones -->
 <h2>Puntuaciones</h2>

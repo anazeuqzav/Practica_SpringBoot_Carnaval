@@ -1,9 +1,11 @@
 package com.iesvdc.carnaval.service;
 
 import com.iesvdc.carnaval.model.Agrupacion;
+import com.iesvdc.carnaval.model.Modalidad;
 import com.iesvdc.carnaval.repository.AgrupacionRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -44,6 +46,27 @@ public class AgrupacionService {
     // Editar Agrupacion
     public void editarAgrupacion(Agrupacion agrupacion){
         agrupacionRepository.save(agrupacion);
+    }
+
+
+    // Método para obtener la clasificación final por modalidad
+    public List<Agrupacion> obtenerClasificacionPorModalidad(Modalidad modalidad) {
+        List<Object[]> resultados = agrupacionRepository.obtenerClasificacionPorModalidad(modalidad);
+
+        List<Agrupacion> clasificacion = new ArrayList<>();
+        for (Object[] resultado : resultados) {
+            Agrupacion agrupacion = (Agrupacion) resultado[0];
+            Double puntuacionTotal = (Double) resultado[1];
+            agrupacion.setPuntuacionTotal(puntuacionTotal);
+            clasificacion.add(agrupacion);
+        }
+
+        return clasificacion;
+    }
+
+    // Método para obtener todas las modalidades
+    public List<Modalidad> obtenerModalidades() {
+        return agrupacionRepository.obtenerModalidades();
     }
 
 

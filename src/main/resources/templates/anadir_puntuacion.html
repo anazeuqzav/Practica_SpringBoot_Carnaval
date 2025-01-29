@@ -17,7 +17,7 @@
   <p th:if="${#fields.hasErrors('fase')}" th:errors="*{fase}"></p>
 
   <label for="puntos">Puntos:</label>
-  <input type="number" id="puntos" th:field="*{puntos}" step="0.01" min="0">
+  <input type="number" id="puntos" th:field="*{puntos}" step="0.01" min="0" max="150" required>
   <p th:if="${#fields.hasErrors('puntos')}" th:errors="*{puntos}"></p>
 
   <button type="submit">Guardar</button>

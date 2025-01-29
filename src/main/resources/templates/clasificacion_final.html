@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Clasificación Final</title>
+</head>
+<body>
+<h1>Clasificación Final</h1>
+
+<!-- Filtro por modalidad -->
+<form th:action="@{/clasificacion}" method="get">
+    <label for="modalidad">Filtrar por modalidad:</label>
+    <select id="modalidad" name="modalidad" th:value="${modalidadSeleccionada}">
+        <option th:each="modalidad : ${modalidades}"
+                th:value="${modalidad}"
+                th:text="${modalidad}" />
+    </select>
+    <button type="submit">Filtrar</button>
+</form>
+
+<!-- Tabla con clasificación -->
+<table>
+    <thead>
+    <tr>
+        <th>Modalidad</th>
+        <th>Nombre de Agrupación</th>
+        <th>Puntuación Total</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="agrupacion : ${clasificacion}">
+        <td th:text="${agrupacion.modalidad}"></td>
+        <td th:text="${agrupacion.nombre}"></td>
+        <td th:text="${agrupacion.puntuacionTotal}"></td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>

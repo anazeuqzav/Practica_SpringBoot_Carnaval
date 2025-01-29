@@ -2,16 +2,15 @@ package com.iesvdc.carnaval.controller;
 
 import com.iesvdc.carnaval.model.Agrupacion;
 import com.iesvdc.carnaval.model.Componente;
+import com.iesvdc.carnaval.model.Modalidad;
 import com.iesvdc.carnaval.service.AgrupacionService;
 import com.iesvdc.carnaval.service.ComponenteService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -124,6 +123,27 @@ public class AgrupacionController {
         agrupacionService.guardarAgrupacion(agrupacion); // Actualiza el producto
         model.addAttribute("mensaje", "Agrupacion editada correctamente");
         return "redirect:/agrupaciones"; // Redirige al catálogo
+    }
+
+    // Método para mostrar la clasificación con modalidad seleccionada
+    @GetMapping("/clasificacion")
+    public String verClasificacion(@RequestParam(name = "modalidad", required = false) Modalidad modalidad, Model model) {
+        if (modalidad == null) {
+            modalidad = Modalidad.values()[0];  // Puedes definir una modalidad por defecto
+        }
+
+        // Obtener la clasificación filtrada por modalidad
+        List<Agrupacion> clasificacion = agrupacionService.obtenerClasificacionPorModalidad(modalidad);
+
+        // Obtener las modalidades disponibles
+        List<Modalidad> modalidades = agrupacionService.obtenerModalidades();
+
+        // Pasar la información a la vista
+        model.addAttribute("clasificacion", clasificacion);
+        model.addAttribute("modalidades", modalidades);
+        model.addAttribute("modalidadSeleccionada", modalidad);
+
+        return "clasificacion_final";  // Nombre de la vista Thymeleaf
     }
 
 

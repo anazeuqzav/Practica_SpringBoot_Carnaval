@@ -1,6 +1,7 @@
 package com.iesvdc.carnaval.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,9 +14,11 @@ public class Agrupacion {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @NotNull(message = "El nombre es obligatorio")
     @Column(name = "nombre")
     private String nombre;
 
+    @NotNull(message = "La modalidad es obligatoria")
     @Enumerated(EnumType.STRING)
     @Column(name = "modalidad")
     private Modalidad modalidad;
@@ -27,7 +30,7 @@ public class Agrupacion {
     private String localidad;
 
     @OneToOne (fetch = FetchType.EAGER)
-    @JoinColumn(name = "director_id")
+    @JoinColumn(name = "director_id", unique = true)
     private Componente director; // relación 1 a 1
 
     @OneToMany(mappedBy = "agrupacion", cascade = CascadeType.ALL)
@@ -35,6 +38,8 @@ public class Agrupacion {
 
     @OneToMany(mappedBy = "agrupacion", cascade = CascadeType.ALL)
     private List<Puntuacion> puntuaciones = new ArrayList<>(); // Relación 1 a muchos
+
+    private Double puntuacionTotal;
 
 
     // Constructores
@@ -127,17 +132,26 @@ public class Agrupacion {
         this.puntuaciones = puntuaciones;
     }
 
-    @Override
-    public String toString() {
-        return "Agrupacion{" +
-                "id=" + id +
-                ", nombre='" + nombre + '\'' +
-                ", modalidad=" + modalidad +
-                ", numeroDeComponentes=" + numeroDeComponentes +
-                ", localidad='" + localidad + '\'' +
-                ", director=" + director +
-                ", componentes=" + componentes +
-                ", puntuaciones=" + puntuaciones +
-                '}';
+    public Double getPuntuacionTotal() {
+        return puntuacionTotal;
+    }
+
+    public void setPuntuacionTotal(Double puntuacionTotal) {
+        this.puntuacionTotal = puntuacionTotal;
+    }
+
+    public int getCapacidadMaxima() {
+        switch (modalidad) {
+            case Chirigota:
+                return 12;
+            case Comparsa:
+                return 15;
+            case Coro:
+                return 45;
+            case Cuarteto:
+                return 4;
+            default:
+                return 0;
+        }
     }
 }

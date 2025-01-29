@@ -1,6 +1,7 @@
 package com.iesvdc.carnaval.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 
 @Entity
 @Table(name = "puntuaciones")
@@ -14,6 +15,9 @@ public class Puntuacion {
     @Column(name = "fase")// cambiar a enum
     private Fase fase;
 
+    @NotNull(message = "Los puntos no pueden estar vacíos")
+    @Min(value = 0, message = "La puntuación debe ser mayor o igual a 0")
+    @Max(value = 100, message = "La puntuación no puede superar los 100 puntos")
     @Column(name = "puntos")
     private double puntos;
 

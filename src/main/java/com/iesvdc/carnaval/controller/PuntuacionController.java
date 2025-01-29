@@ -80,6 +80,14 @@ public class PuntuacionController {
     // Manejar editar componente
     @PostMapping("/puntuacion/editar")
     public String guardarCambios(@ModelAttribute Puntuacion puntuacion) {
+        /*
+        // Obtener la puntuacion anterior de la base de datos
+        Puntuacion puntuacionAnterior = puntuacionService.obtenerPuntuacionPorId(puntuacion.getId()).get();
+        // Obtener la agrupacion anterior de la base de datos (por si se cambia)
+        Agrupacion agrupacionAnterior = agrupacionService.obtenerAgrupacionPorId(puntuacionAnterior.getAgrupacion().getId()).get();
+
+        agrupacionAnterior.getPuntuaciones().remove(puntuacionAnterior);*/
+
         puntuacionService.guardarPuntuacion(puntuacion);
         return "redirect:/";
     }
@@ -87,9 +95,10 @@ public class PuntuacionController {
     // Eliminar una componente
     @PostMapping("/puntuacion/eliminar/{id}")
     public String eliminarPuntuacion(@PathVariable Long id, Model model) {
+        long agrupacionId = puntuacionService.obtenerPuntuacionPorId(id).get().getAgrupacion().getId();
         puntuacionService.eliminarPuntuacion(id);
         model.addAttribute("mensaje", "Puntuacion eliminada correctamente");
-        return "redirect:/agrupaciones";
+        return "redirect:/agrupacion/" + agrupacionId;
     }
 
 
