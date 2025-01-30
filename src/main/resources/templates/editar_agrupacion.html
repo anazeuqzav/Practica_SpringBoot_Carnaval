@@ -1,45 +1,58 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <title>Editar Agrupación</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/styles.css}" />
+
 </head>
+
 <body>
-<h1>Editar Agrupación</h1>
-<form th:action="@{/agrupacion/editar}" th:object="${agrupacion}" method="post">
-    <input type="hidden" th:field="*{id}">
+    <div class="form-body">
 
-    <label for="nombre">Nombre:</label>
-    <input type="text" id="nombre" th:field="*{nombre}">
-    <p th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></p>
+        <h1 class="title-form">Editar Agrupación</h1>
+        <form class="form" th:action="@{/agrupacion/editar}" th:object="${agrupacion}" method="post">
+            <input type="hidden" th:field="*{id}">
 
-    <!-- Modalidad -->
-    <label for="modalidad">Modalidad:</label>
-    <select id="modalidad" th:field="*{modalidad}" required>
-        <option value="" disabled selected>Seleccione una modalidad</option>
-        <option value="Chirigota">Chirigota</option>
-        <option value="Comparsa">Comparsa</option>
-        <option value="Coro">Coro</option>
-        <option value="Cuarteto">Cuarteto</option>
-    </select>
-    <p th:if="${#fields.hasErrors('modalidad')}" th:errors="*{modalidad}"></p>
+            <label for="nombre">Nombre:</label>
+            <input type="text" id="nombre" th:field="*{nombre}">
+            <p th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></p>
+
+            <!-- Modalidad -->
+            <label for="modalidad">Modalidad:</label>
+            <select id="modalidad" th:field="*{modalidad}" required>
+                <option value="" disabled selected>Seleccione una modalidad</option>
+                <option value="Chirigota">Chirigota</option>
+                <option value="Comparsa">Comparsa</option>
+                <option value="Coro">Coro</option>
+                <option value="Cuarteto">Cuarteto</option>
+            </select>
+            <p th:if="${#fields.hasErrors('modalidad')}" th:errors="*{modalidad}"></p>
 
 
-    <label for="localidad">Localidad:</label>
-    <input type="text" id="localidad" th:field="*{localidad}">
-    <p th:if="${#fields.hasErrors('localidad')}" th:errors="*{localidad}"></p>
+            <label for="localidad">Localidad:</label>
+            <input type="text" id="localidad" th:field="*{localidad}">
+            <p th:if="${#fields.hasErrors('localidad')}" th:errors="*{localidad}"></p>
 
-    <!-- Selección de director -->
-    <label for="director">Director:</label>
-    <select id="director" th:field="*{director}">
-        <option value="" disabled selected>Seleccione un director</option>
-        <option th:each="componente : ${componentes}"
-                th:value="${componente.id}"
-                th:text="${componente.nombre}"></option>
-    </select>
-    <p th:if="${#fields.hasErrors('director')}" th:errors="*{director}"></p>
+            <!-- Selección de director -->
+            <label for="director">Director:</label>
+            <select id="director" th:field="*{director}">
+                <option value="" disabled selected>Seleccione un director</option>
+                <option th:each="componente : ${componentes}" th:value="${componente.id}"
+                    th:text="${componente.nombre}"></option>
+            </select>
+            <p th:if="${#fields.hasErrors('director')}" th:errors="*{director}"></p>
 
-    <button type="submit">Guardar Cambios</button>
-</form>
-<a href="/agrupaciones">Volver a la Lista</a>
+            <button type="submit">Guardar Cambios</button>
+        </form>
+        <section class="container-links">
+
+            <a th:href="@{/agrupacion/{id}(id=${agrupacion.id})}">Cancelar</a>
+            <a href="/">Volver al inicio</a>
+
+        </section>
+    </div>
 </body>
+
 </html>

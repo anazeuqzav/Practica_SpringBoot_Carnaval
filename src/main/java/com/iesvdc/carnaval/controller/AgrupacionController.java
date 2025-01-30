@@ -16,7 +16,6 @@ import java.util.Optional;
 /**
  * Manejo de las peticions HTTP
  */
-
 @Controller
 public class AgrupacionController {
 
@@ -54,7 +53,6 @@ public class AgrupacionController {
             return "crear_agrupacion";
         }
         agrupacionService.guardarAgrupacion(agrupacion);
-        model.addAttribute("mensaje", "Agrupación creada correctamente");
         return "redirect:/agrupaciones";
     }
 
@@ -149,3 +147,4 @@ public class AgrupacionController {
 
 
 }
+

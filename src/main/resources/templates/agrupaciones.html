@@ -1,44 +1,60 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="UTF-8">
     <link rel="stylesheet" th:href="@{/css/styles.css}" />
     <title>Gestion de agrupaciones</title>
 </head>
-<body>
-<h1>Gestion de Agrupaciones</h1>
-<table border="1">
-    <thead>
-    <tr>
-        <th>ID</th>
-        <th>Nombre</th>
-        <th>ID Director</th>
-        <th>Modalidad</th>
-        <th>Numero de Componentes</th>
-        <th>Localidad</th>
-        <th>Acciones</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="agrupacion : ${agrupaciones}">
-        <td th:text="${agrupacion.id}"></td>
-        <td th:text="${agrupacion.nombre}"></td>
-       <td th:text="${agrupacion.director?.id}"></td>
-        <td th:text="${agrupacion.modalidad}"></td>
-        <td th:text="${agrupacion.numeroDeComponentes}"></td>
-        <td th:text="${agrupacion.localidad}"></td>
 
-        <td>
-            <a th:href="@{/agrupacion/{id}(id=${agrupacion.id})}">Ver</a>
-            <a th:href="@{/agrupacion/editar/{id}(id=${agrupacion.id})}">Editar</a>
-            <form th:action="@{/agrupacion/eliminar/{id}(id=${agrupacion.id})}" method="post" style="display:inline;">
-                <button type="submit" onclick="return confirm('¿Estás segura de eliminar esta agrupación?');">Eliminar</button>
-            </form>
-        </td>
-    </tr>
-    </tbody>
-</table>
-<a href="/crear_agrupacion">Crear Agrupacion</a>
-<a href="/">Volver al Inicio</a>
+<body>
+    <header class="header-agrupaciones">
+        <h1>Gestión de agrupaciones</h1>
+    </header>
+
+    <!-- Contenedor envolvente para la tabla -->
+    <div class="table-container">
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>ID Director</th>
+                    <th>Modalidad</th>
+                    <th>Numero de Componentes</th>
+                    <th>Localidad</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+            <tr th:each="agrupacion : ${agrupaciones}">
+                <td data-label="ID" th:text="${agrupacion.id}"></td>
+                <td data-label="Nombre" th:text="${agrupacion.nombre}"></td>
+                <td data-label="ID Director" th:text="${agrupacion.director?.id}"></td>
+                <td data-label="Modalidad" th:text="${agrupacion.modalidad}"></td>
+                <td data-label="Numero de Componentes" th:text="${agrupacion.numeroDeComponentes}"></td>
+                <td data-label="Localidad" th:text="${agrupacion.localidad}"></td>
+                <td data-label="Acciones">
+                    <a th:href="@{/agrupacion/{id}(id=${agrupacion.id})}">Ver</a>
+                    <a th:href="@{/agrupacion/editar/{id}(id=${agrupacion.id})}">Editar</a>
+                    <form class="delete-agrupacion-form" th:action="@{/agrupacion/eliminar/{id}(id=${agrupacion.id})}"
+                          method="post" style="display:inline;">
+                        <button class="delete-agrupacion-button" type="submit"
+                                onclick="return confirm('¿Estás segura de eliminar esta agrupación?');">X</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <section class="container-links">
+        <a href="/crear_agrupacion">Crear agrupacion</a>
+        <a href="/">Volver al inicio</a>
+    </section>
+
 </body>
+
+
 </html>

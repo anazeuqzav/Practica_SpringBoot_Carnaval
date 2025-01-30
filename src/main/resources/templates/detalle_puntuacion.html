@@ -1,20 +1,31 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" th:href="@{/css/styles.css}" />
   <title>Detalle de Puntuación</title>
 </head>
+
 <body>
-<h1 th:text="'Detalle de la Puntuación: ' + ${puntuacion.id}"></h1>
+  <h1 th:text="'Detalle de la Puntuación: ' + ${puntuacion.id}"></h1>
 
-<!-- Información de la puntuación -->
-<p><strong>Fase:</strong> <span th:text="${puntuacion.fase}"></span></p>
-<p><strong>Puntos:</strong> <span th:text="${puntuacion.puntos}"></span></p>
-<p><strong>Agrupación:</strong>
-  <span th:text="${puntuacion.agrupacion != null ? puntuacion.agrupacion.nombre : 'Sin agrupación'}"></span>
-</p>
+  <!-- Información de la puntuación -->
+  <div class="info">
+    <p><strong>Fase:</strong> <span th:text="${puntuacion.fase}"></span></p>
+    <p><strong>Puntos:</strong> <span th:text="${puntuacion.puntos}"></span></p>
+    <p><strong>Agrupación:</strong>
+      <span th:text="${puntuacion.agrupacion != null ? puntuacion.agrupacion.nombre : 'Sin agrupación'}"></span>
+    </p>
+  </div>
 
-<!-- Enlaces -->
-<a href="/">Volver al Inicio</a>
+
+  <!-- Enlaces -->
+  <section class="container-links">
+    <a th:href="@{'/agrupacion/' + ${puntuacion.agrupacion.id}}">Volver a la agrupacion</a>
+    <!--como puedo volver a la detalle de la agurpacion del componente?-->
+    <a href="/">Volver al inicio</a>
+  </section>
 </body>
+
 </html>

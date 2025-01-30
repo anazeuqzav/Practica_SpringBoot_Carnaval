@@ -1,162 +1,397 @@
-/* General reset */
-/* {
-    margin: 0;
-    padding: 0;
+/* Estilos generales */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+* {
     box-sizing: border-box;
 }
 
 body {
     font-family: 'Poppins', sans-serif;
+    background-color: #f9f9f9;
     color: #333;
+    padding: 0;
+    margin-right: 10%;
+    margin-left: 10%
 }
 
-.container {
-    width: 80%;
-    margin: 0 auto;
-    padding: 20px;
-}
-
-header {
-    background-color: #333;
-    color: #fff;
-    padding: 20px;
+/* Encabezado */
+.header-index {
+    background-color: #FF8C00;
     text-align: center;
-    border-radius: 8px;
+    padding: 20px 0;
 }
 
-h1 {
+.header-index h1 {
     font-family: 'Anton', sans-serif;
-    font-size: 2.5rem;
+    font-size: 3rem;
+    color: white;
+    margin: 0;
 }
 
-a {
+.header-agrupaciones {
+    color: #520f07;
+    text-align: center;
+    padding: 5px 0;
+}
+
+.header-agrupaciones h1 {
+    color: #520f07;
+}
+
+.container-links {
+    display: flex;
+    padding: 0;
+    margin: 0;
+    margin-top: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.img-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.img-mascara {
+    width: 20%;
+}
+
+/* Enlaces principales */
+.container-links>a {
+    color: #ffffff;
+    text-align: center;
     text-decoration: none;
-    color: #5e4b8b;
+    width: 250px;
     font-weight: bold;
-    margin-right: 20px;
+    margin: 0;
+    display: inline-block;
     transition: color 0.3s;
+    background-color: #ff664b;
+    padding: 5px 8px;
+    border-radius: 5px;
 }
 
-a:hover {
-    color: #9b5de5;
-}
-
+/* Tabla */
 table {
     width: 100%;
-    margin-top: 20px;
     border-collapse: collapse;
-    border-radius: 8px;
-    overflow: hidden;
 }
 
 th, td {
-    padding: 10px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
+    padding: 2px 2px;
+    text-align: center;
+    border: 1px solid #ddd;
 }
 
 th {
-    background-color: #4b3f72;
+    background-color: #f89d8d;
     color: white;
+    font-weight: bold;
 }
 
-td {
-    background-color: #fff;
+tbody tr:nth-child(odd) {
+    background-color: #FFFAF0;
 }
 
-tr:nth-child(even) {
-    background-color: #f9f9f9;
+tbody tr:nth-child(even) {
+    background-color: #fce8f6;
 }
 
-button {
-    background-color: #4b3f72;
+.delete-agrupacion-button {
+    background-color: #d44a3a;
     color: white;
     border: none;
-    padding: 10px 15px;
+    width: 25px;
+    font-weight: bold;
+    height: 25px;
+    font-size: 0.8rem;
     cursor: pointer;
+    border-radius: 50%;
+    transition: background-color 0.3s;
+}
+
+td a {
+    display: inline-block;
+    margin: 0 5px;
+    padding: 5px 8px;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #520f07;
+    border: none;
+}
+
+td a:hover {
+    color: #fc5919;
+}
+
+.btn-anadir {
+    padding: 5px 8px;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #dd2088;
     border-radius: 5px;
+    border: none;
+}
+
+.btn-anadir:hover {
+    color: #fa55d1;
+}
+
+.info p {
+    margin: 2px 0;
+    padding: 0;
+}
+
+/* Formularios */
+.title-form {
+    text-align: center;
+}
+
+.form {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+.form label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+    color: #FF4500;
+}
+
+.form input,
+.form select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 6px;
+    background-color: #FFFAF0;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+    box-sizing: border-box;
+}
+
+.form p {
+    color: #ff0000;
+    font-size: 0.9rem;
+    margin-top: -10px;
+    margin-bottom: 15px;
+}
+
+.form button {
+    display: block;
+    margin: 0 auto;
+    width: 50%;
+    background-color: #fa90e3;
+    color: #520f07;
+    padding: 12px;
+    border: none;
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: background-color 0.3s;
+}
+
+.form button:hover {
+    background-color: #520f07;
+    color: white;
+}
+
+.form-body {
+    width: 600px;
+    margin: 0 auto
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Estilo de botones de acción */
+button {
+    background-color: #FF6347;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
     transition: background-color 0.3s;
 }
 
 button:hover {
-    background-color: #6c57a1;
+    background-color: #FF8C00;
 }
 
-form {
-    margin-top: 20px;
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+table th {
+    padding: 5px;
+    background-color: #f7d0f7;
+    color: #520f07;
 }
 
-label {
-    display: block;
-    margin-bottom: 8px;
-    font-weight: bold;
-}
-
-input[type="text"], select {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 20px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
+table td {
     font-size: 1rem;
 }
 
-input[type="text"]:focus, select:focus {
-    border-color: #4b3f72;
+/* Contenedor del formulario */
+.form-clasificacion {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 20px;
 }
 
-button[type="submit"] {
-    background-color: #4b3f72;
-    color: white;
+.form-clasificacion label {
+    font-weight: bold;
+    color: #FF4500;
+}
+
+.form-clasificacion select {
+    padding: 8px;
+    border-radius: 6px;
+    background-color: #FFFAF0;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+}
+
+.form-clasificacion button {
+    padding: 10px 15px;
+    background-color: #fa90e3;
+    color: #520f07;
     border: none;
-    padding: 12px 18px;
+    border-radius: 6px;
+    font-weight: bold;
     font-size: 1rem;
     cursor: pointer;
-    border-radius: 5px;
     transition: background-color 0.3s;
 }
 
-button[type="submit"]:hover {
-    background-color: #6c57a1;
+.form-clasificacion button:hover {
+    background-color: #520f07;
+    color: white;
 }
 
-button[type="submit"]:disabled {
-    background-color: #ddd;
-    cursor: not-allowed;
+.emojis {
+    font-size: 2rem;
 }
 
-form a {
-    display: inline-block;
-    margin-top: 20px;
-    color: #4b3f72;
-    font-weight: bold;
-    text-decoration: none;
-}
-
-form a:hover {
-    color: #9b5de5;
-}
-
-h2 {
-    font-size: 1.5rem;
-    margin-top: 30px;
-    color: #4b3f72;
-}
-
-p {
-    margin-bottom: 10px;
-}
-
-@media (max-width: 768px) {
-    .container {
-        width: 95%;
+/* Media Queries combinadas */
+@media (max-width: 767px) {
+    header h1 {
+        font-size: 1.5rem;
     }
 
-    table, form {
+    .img-container {
+        margin: 10px;
+    }
+
+    .img-mascara {
         width: 100%;
+        max-width: 150px;
     }
-}*/
+
+    .container-links {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 0;
+        margin: 0;
+        margin-top: 25px;
+    }
+
+    .container-links a {
+        font-size: 0.8rem;
+        width: 100%;
+        margin: 5px 0;
+        padding: 8px;
+        text-align: center;
+    }
+
+    table th, table td {
+        font-size: 0.9rem;
+        padding: 8px;
+    }
+
+    button {
+        font-size: 1rem;
+    }
+
+    .form {
+        padding: 10px;
+    }
+
+    .form input,
+    .form select {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        box-sizing: border-box;
+    }
+
+    .form label {
+        font-size: 1rem;
+        margin-bottom: 5px;
+    }
+
+    .form button {
+        width: 100%;
+        padding: 12px;
+        font-size: 1rem;
+    }
+
+    .container-links {
+        flex-direction: column;
+        align-items: center;
+        margin-top: 20px;
+    }
+
+    .container-links a {
+        width: 100%;
+        margin-top: 10px;
+        text-align: center;
+        padding: 12px;
+    }
+
+    .form p {
+        font-size: 0.9rem;
+        margin-top: -10px;
+    }
+}
+
+/* Pantallas medianas (tabletas) */
+@media (min-width: 768px) and (max-width: 1024px) {
+    header h1 {
+        font-size: 1.8rem;
+    }
+
+    .container-links a {
+        font-size: 1rem;
+    }
+
+    .img-container {
+        margin: 20px;
+    }
+
+    .img-mascara {
+        width: 50%;
+    }
+
+    table th, table td {
+        font-size: 1rem;
+        padding: 10px;
+    }
+}
+
+.table-container {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin-bottom: 20px;
+}
