@@ -1,5 +1,6 @@
 package com.iesvdc.carnaval.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 
@@ -54,6 +55,14 @@ public class Agrupacion {
         this.numeroDeComponentes = numeroDeComponentes;
         this.localidad = localidad;
         this.director = director;
+    }
+
+    public Agrupacion(long id, String nombre, Modalidad modalidad, Integer numeroDeComponentes, String localidad) {
+        this.id = id;
+        this.nombre = nombre;
+        this.modalidad = modalidad;
+        this.numeroDeComponentes = numeroDeComponentes;
+        this.localidad = localidad;
     }
 
     // Completo
@@ -153,5 +162,20 @@ public class Agrupacion {
             default:
                 return 0;
         }
+    }
+
+    @Override
+    public String toString() {
+        return "Agrupacion{" +
+                "id=" + id +
+                ", nombre='" + nombre + '\'' +
+                ", modalidad=" + modalidad +
+                ", numeroDeComponentes=" + numeroDeComponentes +
+                ", localidad='" + localidad + '\'' +
+                ", director=" + director +
+                ", componentes=" + componentes +
+                ", puntuaciones=" + puntuaciones +
+                ", puntuacionTotal=" + puntuacionTotal +
+                '}';
     }
 }

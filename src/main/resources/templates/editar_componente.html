@@ -61,7 +61,7 @@
 
     <!-- Enlace para volver -->
     <section class="container-links">
-      <a th:href="@{/agrupacion/{id}(id=${agrupacion.id})}">Cancelar</a>
+      <a th:href="@{'/agrupacion/' + ${componente.agrupacion.id}}">Cancelar</a>
       <a href="/">Volver al inicio</a>
     </section>
 

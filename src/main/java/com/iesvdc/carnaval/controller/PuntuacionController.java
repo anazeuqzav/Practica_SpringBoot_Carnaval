@@ -6,6 +6,7 @@ import com.iesvdc.carnaval.model.Fase;
 import com.iesvdc.carnaval.model.Puntuacion;
 import com.iesvdc.carnaval.service.AgrupacionService;
 import com.iesvdc.carnaval.service.PuntuacionService;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -42,13 +43,24 @@ public class PuntuacionController {
 
     // Manejar la creación de un agrupacion
     @PostMapping("/puntuacion/guardar")
-    public String anadirPuntuacion(@ModelAttribute("puntuacion") Puntuacion puntuacion, BindingResult result, Model model) {
+    public String anadirPuntuacion(@Valid @ModelAttribute("puntuacion") Puntuacion puntuacion,
+                                   BindingResult result, Model model) {
+        // Verificar si hay errores de validación
         if (result.hasErrors()) {
-            return "anadir_puntuacion";
+            return "anadir_puntuacion"; // Si hay errores, mostrar el formulario de nuevo
         }
+
+        // Verificar que la agrupación no sea nula
+        if (puntuacion.getAgrupacion() == null) {
+            model.addAttribute("error", "La agrupación no puede ser nula");
+            return "anadir_puntuacion"; // Mostrar el formulario con un mensaje de error
+        }
+
+        // Guardar la puntuación
         puntuacionService.guardarPuntuacion(puntuacion);
-        model.addAttribute("mensaje", "Puntuacion creada correctamente");
-        return "redirect:/agrupaciones";
+
+        // Redirigir a la página de detalles de la agrupación
+        return "redirect:/agrupaciones/" + puntuacion.getAgrupacion().getId();
     }
 
     // Ver detalle del puntuacion
@@ -80,13 +92,6 @@ public class PuntuacionController {
     // Manejar editar componente
     @PostMapping("/puntuacion/editar")
     public String guardarCambios(@ModelAttribute Puntuacion puntuacion) {
-        /*
-        // Obtener la puntuacion anterior de la base de datos
-        Puntuacion puntuacionAnterior = puntuacionService.obtenerPuntuacionPorId(puntuacion.getId()).get();
-        // Obtener la agrupacion anterior de la base de datos (por si se cambia)
-        Agrupacion agrupacionAnterior = agrupacionService.obtenerAgrupacionPorId(puntuacionAnterior.getAgrupacion().getId()).get();
-
-        agrupacionAnterior.getPuntuaciones().remove(puntuacionAnterior);*/
 
         puntuacionService.guardarPuntuacion(puntuacion);
         return "redirect:/";
@@ -100,6 +105,4 @@ public class PuntuacionController {
         model.addAttribute("mensaje", "Puntuacion eliminada correctamente");
         return "redirect:/agrupacion/" + agrupacionId;
     }
-
-
 }

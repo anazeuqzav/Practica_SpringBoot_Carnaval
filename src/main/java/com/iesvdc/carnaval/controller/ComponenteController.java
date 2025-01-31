@@ -56,18 +56,19 @@ public class ComponenteController {
         Agrupacion agrupacion = agrupacionService.obtenerAgrupacionPorId(componente.getAgrupacion().getId()).get();
 
         if (componente.getRol().equals("Director")) {
-            if (agrupacion.getDirector()!= null){
+            if (agrupacion.getDirector() != null){
                 // si la agrupacion ya tiene director lanza un error
                 model.addAttribute("error", "Ya existe un director en esta agrupación.");
                 model.addAttribute("agrupacion", agrupacion);
                 return "anadir_componente";  // Volver al formulario con el error
             }
+            // Guardar el componente primero, si no está guardado
+            componenteService.guardarComponente(componente);
             agrupacion.setDirector(componente);
         }
+
         agrupacion.setNumeroDeComponentes(agrupacion.getNumeroDeComponentes() + 1);
         agrupacionService.guardarAgrupacion(agrupacion);
-
-        componenteService.guardarComponente(componente); // Guardar componente
 
         return "redirect:/agrupacion/" + componente.getAgrupacion().getId(); // Volver al detalle de la agrupación
     }
@@ -103,19 +104,30 @@ public class ComponenteController {
     public String guardarCambios(@Valid @ModelAttribute("componente") Componente componente,
                                  BindingResult bindingResult,
                                  Model model) {
+        // Comprobar si hay errores de validación
         if (bindingResult.hasErrors()) {
             model.addAttribute("agrupaciones", agrupacionService.listarAgrupaciones());
             return "editar_componente";
         }
 
         // Obtener de la base de datos el componente antes de los cambios
-        Componente componenteOriginal = componenteService.obtenerComponentePorId(componente.getId()).get();
+        Optional<Componente> componenteOriginalOptional = componenteService.obtenerComponentePorId(componente.getId());
+        if (componenteOriginalOptional.isEmpty()) {
+            model.addAttribute("error", "Componente no encontrado");
+            model.addAttribute("agrupaciones", agrupacionService.listarAgrupaciones());
+            return "editar_componente";
+        }
+        Componente componenteOriginal = componenteOriginalOptional.get();
 
-        // Obtener la agrupacion anterior
+        // Obtener la agrupación anterior y la nueva
         Agrupacion agrupacionAnterior = componenteOriginal.getAgrupacion();
-
-        // Obtener la agrupacion nueva
-        Agrupacion nuevaAgrupacion = agrupacionService.obtenerAgrupacionPorId(componente.getAgrupacion().getId()).get();
+        Optional<Agrupacion> nuevaAgrupacionOptional = agrupacionService.obtenerAgrupacionPorId(componente.getAgrupacion().getId());
+        if (nuevaAgrupacionOptional.isEmpty()) {
+            model.addAttribute("error", "Agrupación no encontrada");
+            model.addAttribute("agrupaciones", agrupacionService.listarAgrupaciones());
+            return "editar_componente";
+        }
+        Agrupacion nuevaAgrupacion = nuevaAgrupacionOptional.get();
 
         // Comprobación del número máximo de componentes de la agrupación
         if (nuevaAgrupacion.getNumeroDeComponentes() >= nuevaAgrupacion.getCapacidadMaxima()) {
@@ -129,7 +141,7 @@ public class ComponenteController {
             if (nuevaAgrupacion.getDirector() != null) {
                 model.addAttribute("agrupaciones", agrupacionService.listarAgrupaciones());
                 model.addAttribute("error", "Ya existe un director en esta agrupación.");
-                return "editar_componente";  // Volver al formulario con el error
+                return "editar_componente";
             }
             nuevaAgrupacion.setDirector(componente);
         }
@@ -152,7 +164,8 @@ public class ComponenteController {
 
         // Guardar el componente actualizado
         componenteService.guardarComponente(componente);
-        return "redirect:/agrupacion/" + componente.getAgrupacion().getId();
+
+        return "redirect:/agrupacion/" + nuevaAgrupacion.getId();
     }
 
     // Eliminar una componente

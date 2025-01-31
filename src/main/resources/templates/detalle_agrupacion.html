@@ -4,7 +4,7 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" th:href="@{/css/styles.css}" />
-    <title>Detalle de Agrupación</title>
+    <title>Detalle de agrupación</title>
 </head>
 
 <body>
@@ -58,7 +58,7 @@
     <!-- Añadir componente -->
     <a class="btn-anadir" th:href="@{/componente/nuevo(idAgrupacion=${agrupacion.id})}" id="btnAgregarComponente"
         th:data-num-componentes="${agrupacion.numeroDeComponentes}" th:data-modalidad="${agrupacion.modalidad}">Añadir
-        Componente</a>
+        componente</a>
 
     <p id="mensajeLimite" style="color: red; display: none;">No puedes añadir más componentes.</p>
 
@@ -117,7 +117,7 @@
 
         </tbody>
     </table>
-    <a class="btn-anadir" th:href="@{/puntuacion/nuevo(idAgrupacion=${agrupacion.id})}">Añadir Puntuacion</a>
+    <a class="btn-anadir" th:href="@{/puntuacion/nuevo(idAgrupacion=${agrupacion.id})}">Añadir puntuacion</a>
 
     <section class="container-links">
         <!-- Enlace para volver -->

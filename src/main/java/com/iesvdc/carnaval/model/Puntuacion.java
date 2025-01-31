@@ -67,4 +67,14 @@ public class Puntuacion {
     public void setPuntos(double puntos) {
         this.puntos = puntos;
     }
+
+    @Override
+    public String toString() {
+        return "Puntuacion{" +
+                "id=" + id +
+                ", fase=" + fase +
+                ", puntos=" + puntos +
+                ", agrupacion=" + agrupacion +
+                '}';
+    }
 }

@@ -69,9 +69,4 @@ public class AgrupacionService {
         return agrupacionRepository.obtenerModalidades();
     }
 
-
-
-
-
-
 }

@@ -70,9 +70,11 @@ public class AgrupacionController {
 
             // Pasar la lista de puntuaciones de la agrupación
             model.addAttribute("puntuaciones", agrupacion.getPuntuaciones());
+            return "detalle_agrupacion";
+        } else {
+            // Si no se encuentra la agrupación, redirigir o manejar el error
+            return "redirect:/agrupaciones";
         }
-
-        return "detalle_agrupacion";
     }
     // Eliminar una agrupacion
     @PostMapping("/agrupacion/eliminar/{id}")
@@ -104,10 +106,14 @@ public class AgrupacionController {
         // Recuperar la agrupación original desde la base de datos
         Agrupacion agrupacionOriginal = agrupacionService.obtenerAgrupacionPorId(agrupacion.getId()).get();
 
-        // Quitar el rol del director actual
+        // Recuperar el director anterior
         Componente directorAnterior = agrupacionOriginal.getDirector();
-        directorAnterior.setRol(null); // O el valor por defecto
-        componenteService.guardarComponente(directorAnterior); // Guardar cambios
+
+        // Solo quitar el rol si hay un director
+        if (directorAnterior != null) {
+            directorAnterior.setRol(null); // O el valor por defecto
+            componenteService.guardarComponente(directorAnterior); // Guardar cambios
+        } // Guardar cambios
 
 
         // Asignar el rol de director al nuevo componente seleccionado (si existe)

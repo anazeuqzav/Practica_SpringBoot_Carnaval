@@ -1,5 +1,6 @@
 package com.iesvdc.carnaval.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 
@@ -26,7 +27,7 @@ public class Componente {
     private String instrumento = null; // opcional
 
     @OneToOne(mappedBy = "director")
-    private Agrupacion agrupacionDirigida = null;
+    private Agrupacion agrupacionDirigida;
 
     @ManyToOne
     @JoinColumn(name = "agrupacion_id")
@@ -34,6 +35,13 @@ public class Componente {
 
     // Constructores
     public Componente() {
+    }
+
+    public Componente(long id, String nombre, String rol, Agrupacion agrupacion) {
+        this.id = id;
+        this.nombre = nombre;
+        this.rol = rol;
+        this.agrupacion = agrupacion;
     }
 
     public Componente(long id, String nombre, Integer edad, String rol, String instrumento, Agrupacion agrupacion) {
@@ -99,5 +107,17 @@ public class Componente {
 
     public void setAgrupacion(Agrupacion agrupacion) {
         this.agrupacion = agrupacion;
+    }
+
+    @Override
+    public String toString() {
+        return "Componente{" +
+                "id=" + id +
+                ", nombre='" + nombre + '\'' +
+                ", edad=" + edad +
+                ", rol='" + rol + '\'' +
+                ", instrumento='" + instrumento + '\'' +
+                ", agrupacionDirigida=" + agrupacionDirigida +
+                '}';
     }
 }
