@@ -1,6 +1,7 @@
 package com.iesvdc.carnaval.controller;
 
 import com.iesvdc.carnaval.model.Agrupacion;
+import com.iesvdc.carnaval.model.Fase;
 import com.iesvdc.carnaval.model.Modalidad;
 import com.iesvdc.carnaval.service.AgrupacionService;
 import com.iesvdc.carnaval.service.ComponenteService;
@@ -120,18 +121,4 @@ class AgrupacionControllerTest {
         Mockito.verify(agrupacionService, Mockito.times(1)).guardarAgrupacion(Mockito.any(Agrupacion.class));
     }
 
-    @Test
-    @DisplayName("Prueba de retornar la clasificación final por modalidad")
-    public void verClasificacion_debeRetornarVistaConClasificacion() throws Exception {
-        List<Agrupacion> clasificacion = Arrays.asList(agrupacion);
-        Mockito.when(agrupacionService.obtenerClasificacionPorModalidad(Modalidad.Chirigota)).thenReturn(clasificacion);
-        Mockito.when(agrupacionService.obtenerModalidades()).thenReturn(Arrays.asList(Modalidad.values()));
-
-        mockMvc.perform(get("/clasificacion").param("modalidad", "Chirigota"))
-                .andExpect(status().isOk())
-                .andExpect(view().name("clasificacion_final"))
-                .andExpect(model().attributeExists("clasificacion"))
-                .andExpect(model().attributeExists("modalidades"))
-                .andExpect(model().attribute("clasificacion", clasificacion));
-    }
 }

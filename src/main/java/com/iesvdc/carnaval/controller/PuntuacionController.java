@@ -60,7 +60,7 @@ public class PuntuacionController {
         puntuacionService.guardarPuntuacion(puntuacion);
 
         // Redirigir a la página de detalles de la agrupación
-        return "redirect:/agrupaciones/" + puntuacion.getAgrupacion().getId();
+        return "redirect:/agrupacion/" + puntuacion.getAgrupacion().getId();
     }
 
     // Ver detalle del puntuacion
@@ -92,9 +92,8 @@ public class PuntuacionController {
     // Manejar editar componente
     @PostMapping("/puntuacion/editar")
     public String guardarCambios(@ModelAttribute Puntuacion puntuacion) {
-
         puntuacionService.guardarPuntuacion(puntuacion);
-        return "redirect:/";
+        return "redirect:/agrupacion/" + puntuacion.getAgrupacion().getId();
     }
 
     // Eliminar una componente

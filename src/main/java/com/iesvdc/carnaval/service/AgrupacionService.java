@@ -1,11 +1,13 @@
 package com.iesvdc.carnaval.service;
 
 import com.iesvdc.carnaval.model.Agrupacion;
+import com.iesvdc.carnaval.model.Fase;
 import com.iesvdc.carnaval.model.Modalidad;
 import com.iesvdc.carnaval.repository.AgrupacionRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -50,8 +52,8 @@ public class AgrupacionService {
 
 
     // Método para obtener la clasificación final por modalidad
-    public List<Agrupacion> obtenerClasificacionPorModalidad(Modalidad modalidad) {
-        List<Object[]> resultados = agrupacionRepository.obtenerClasificacionPorModalidad(modalidad);
+    public List<Agrupacion> obtenerClasificacionPorModalidadYFase(Modalidad modalidad, Fase fase) {
+        List<Object[]> resultados = agrupacionRepository.obtenerClasificacionPorModalidadYFase(modalidad, fase);
 
         List<Agrupacion> clasificacion = new ArrayList<>();
         for (Object[] resultado : resultados) {
@@ -67,6 +69,11 @@ public class AgrupacionService {
     // Método para obtener todas las modalidades
     public List<Modalidad> obtenerModalidades() {
         return agrupacionRepository.obtenerModalidades();
+    }
+
+    //Meétodo para obtener todas las fases
+    public List<Fase> obtenerFases() {
+        return Arrays.asList(Fase.values());
     }
 
 }

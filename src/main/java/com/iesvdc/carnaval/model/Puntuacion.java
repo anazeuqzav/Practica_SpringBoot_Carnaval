@@ -11,8 +11,8 @@ public class Puntuacion {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "fase")// cambiar a enum
+    @Enumerated(EnumType.ORDINAL)
+    @Column(name = "fase")
     private Fase fase;
 
     @NotNull(message = "Los puntos no pueden estar vacíos")

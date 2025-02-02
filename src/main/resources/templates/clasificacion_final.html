@@ -5,48 +5,58 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Clasificación Final</title>
     <link rel="stylesheet" th:href="@{/css/styles.css}" />
-
 </head>
 
 <body>
-    <h1>Clasificación Final</h1>
+<h1>Clasificación Final</h1>
 
-    <!-- Filtro por modalidad -->
-    <form class="form-clasificacion" th:action="@{/clasificacion}" method="get">
-        <label for="modalidad">Filtrar por modalidad:</label>
-        <select id="modalidad" name="modalidad" th:value="${modalidadSeleccionada}">
-            <option th:each="modalidad : ${modalidades}" th:value="${modalidad}" th:text="${modalidad}" />
-        </select>
-        <button type="submit">Filtrar</button>
-    </form>
+<!-- Filtro por modalidad -->
+<form class="form-clasificacion" th:action="@{/clasificacion}" method="get">
+    <label for="modalidad">Filtrar por modalidad:</label>
+    <select id="modalidad" name="modalidad">
+        <option th:each="modalidad : ${modalidades}"
+                th:value="${modalidad}"
+                th:text="${modalidad}"
+                th:selected="${modalidad == modalidadSeleccionada}"></option>
+    </select>
 
-    <!-- Tabla con clasificación -->
-    <table>
-        <thead>
-            <tr>
-                <th>Puesto</th>
-                <th>Nombre de Agrupación</th>
-                <th>Puntuación Total</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="agrupacion, iterStat : ${clasificacion}">
-                <td class="emojis">
-                    <span th:if="${iterStat.index == 0}">🏆</span> <!-- Trofeo de oro -->
-                    <span th:if="${iterStat.index == 1}">🥈</span> <!-- Medalla de plata -->
-                    <span th:if="${iterStat.index == 2}">🥉</span> <!-- Medalla de bronce -->
-                    <span th:if="${iterStat.index > 2}" th:text="${iterStat.index + 1}"></span> <!-- Puesto numérico -->
-                </td>
-                <td th:text="${agrupacion.nombre}"></td>
-                <td th:text="${agrupacion.puntuacionTotal}"></td>
-            </tr>
-        </tbody>
-    </table>
-    <section class="container-links">
-        <a href="/">Volver al inicio</a>
-    </section>
+    <!-- Filtro por Fase -->
+    <label for="fase">Filtrar por fase:</label>
+    <select id="fase" name="fase">
+        <option th:each="fase : ${fases}"
+                th:value="${fase}"
+                th:text="${fase}"
+                th:selected="${fase == faseSeleccionada}"></option>
+    </select>
 
+    <button type="submit">Filtrar</button>
+</form>
 
+<!-- Tabla con clasificación -->
+<table>
+    <thead>
+    <tr>
+        <th>Puesto</th>
+        <th>Nombre de Agrupación</th>
+        <th>Puntuación Total</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="agrupacion, iterStat : ${clasificacion}">
+        <td class="emojis">
+            <span th:if="${iterStat.index == 0}">🏆</span>
+            <span th:if="${iterStat.index == 1}">🥈</span>
+            <span th:if="${iterStat.index == 2}">🥉</span>
+            <span th:if="${iterStat.index > 2}" th:text="${iterStat.index + 1}"></span> <!-- Puesto numérico -->
+        </td>
+        <td th:text="${agrupacion.nombre}"></td>
+        <td th:text="${agrupacion.puntuacionTotal}"></td>
+    </tr>
+    </tbody>
+</table>
+<section class="container-links">
+    <a href="/">Volver al inicio</a>
+</section>
 </body>
 
 </html>

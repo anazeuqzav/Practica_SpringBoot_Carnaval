@@ -66,7 +66,7 @@ class PuntuacionControllerTest {
                         .param("fase", "Final")
                         .param("agrupacion.id", "55")) // Asegúrate de que este parámetro esté correctamente enviado
                 .andExpect(status().is3xxRedirection()) // Esperar una redirección
-                .andExpect(redirectedUrl("/agrupaciones/55")); // Esperar la URL de redirección
+                .andExpect(redirectedUrl("/agrupacion/55")); // Esperar la URL de redirección
 
         // Verificar que se llamó al método de guardar
         Mockito.verify(puntuacionService, Mockito.times(1)).guardarPuntuacion(Mockito.any(Puntuacion.class));
@@ -107,7 +107,7 @@ class PuntuacionControllerTest {
                         .param("fase", "Final")
                         .param("agrupacion.id", "55"))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("/"));
+                .andExpect(redirectedUrl("/agrupacion/55"));
 
         Mockito.verify(puntuacionService, Mockito.times(1)).guardarPuntuacion(Mockito.any(Puntuacion.class));
     }

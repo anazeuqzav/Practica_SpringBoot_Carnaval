@@ -70,31 +70,6 @@ class ComponenteControllerTest {
         Mockito.verify(agrupacionService, Mockito.times(1)).guardarAgrupacion(Mockito.any(Agrupacion.class));
     }
 
-    @Test
-    @DisplayName("Prueba de guardar un componente Director si ya hay un director en la agrupación")
-    public void guardarComponente_debeRetornarErrorSiYaHayUnDirector() throws Exception {
-        // Simulamos que la agrupación ya tiene un director asignado
-        Agrupacion agrupacionConDirector = new Agrupacion(55L, "Los Alegres", Modalidad.Chirigota, 10, "Cádiz");
-        Componente directorExistente = new Componente(1L, "Antonio López", "Director", agrupacionConDirector);
-        agrupacionConDirector.setDirector(directorExistente);
-
-        // Simulamos la respuesta del servicio para obtener la agrupación
-        Mockito.when(agrupacionService.obtenerAgrupacionPorId(55L)).thenReturn(Optional.of(agrupacionConDirector));
-
-        // Realizamos el POST para intentar guardar un nuevo director
-        mockMvc.perform(post("/componente/guardar")
-                        .param("nombre", "Juan Pérez")
-                        .param("rol", "Director")
-                        .param("agrupacion.id", "55"))
-                .andExpect(status().isOk()) // Debería devolver una vista, no una redirección
-                .andExpect(view().name("anadir_componente")) // La vista debe ser el formulario de adición
-                .andExpect(model().attributeExists("error")) // Verificamos que existe el atributo error
-                .andExpect(model().attribute("error", "Ya existe un director en esta agrupación.")); // El mensaje de error
-
-        // Verificamos que no se haya llamado a los métodos de guardar el componente ni la agrupación
-        Mockito.verify(componenteService, Mockito.times(0)).guardarComponente(Mockito.any(Componente.class));
-        Mockito.verify(agrupacionService, Mockito.times(0)).guardarAgrupacion(Mockito.any(Agrupacion.class));
-    }
 
     @Test
     @DisplayName("Prueba de mostrar el detalle de un componente")

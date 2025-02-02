@@ -2,6 +2,7 @@ package com.iesvdc.carnaval.controller;
 
 import com.iesvdc.carnaval.model.Agrupacion;
 import com.iesvdc.carnaval.model.Componente;
+import com.iesvdc.carnaval.model.Fase;
 import com.iesvdc.carnaval.model.Modalidad;
 import com.iesvdc.carnaval.service.AgrupacionService;
 import com.iesvdc.carnaval.service.ComponenteService;
@@ -129,28 +130,30 @@ public class AgrupacionController {
         return "redirect:/agrupaciones"; // Redirige al catálogo
     }
 
-    // Método para mostrar la clasificación con modalidad seleccionada
     @GetMapping("/clasificacion")
-    public String verClasificacion(@RequestParam(name = "modalidad", required = false) Modalidad modalidad, Model model) {
+    public String verClasificacion(@RequestParam(name = "modalidad", required = false) Modalidad modalidad,
+                                   @RequestParam(name = "fase", required = false) Fase fase,
+                                   Model model) {
         if (modalidad == null) {
-            modalidad = Modalidad.values()[0];  // Puedes definir una modalidad por defecto
+            modalidad = Modalidad.values()[0];
         }
 
-        // Obtener la clasificación filtrada por modalidad
-        List<Agrupacion> clasificacion = agrupacionService.obtenerClasificacionPorModalidad(modalidad);
+        if (fase == null) {
+            fase = Fase.Final; // Por defecto, mostrar la clasificación final
+        }
 
-        // Obtener las modalidades disponibles
+        List<Agrupacion> clasificacion = agrupacionService.obtenerClasificacionPorModalidadYFase(modalidad, fase);
         List<Modalidad> modalidades = agrupacionService.obtenerModalidades();
+        List<Fase> fases = agrupacionService.obtenerFases();
 
-        // Pasar la información a la vista
         model.addAttribute("clasificacion", clasificacion);
         model.addAttribute("modalidades", modalidades);
         model.addAttribute("modalidadSeleccionada", modalidad);
+        model.addAttribute("faseSeleccionada", fase);
+        model.addAttribute("fases", fases);
 
-        return "clasificacion_final";  // Nombre de la vista Thymeleaf
+        return "clasificacion_final";
     }
-
-
 
 }
 

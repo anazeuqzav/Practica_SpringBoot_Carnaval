@@ -32,7 +32,7 @@ class ComponenteServiceTest {
     @BeforeEach
     void setUp() {
         agrupacion = new Agrupacion(1L, "Los Alegres", Modalidad.Chirigota, 10, "Cádiz");
-        componente = new Componente(1L, "Juan Pérez", 30, "Cantante", "Guitarra", agrupacion);
+        componente = new Componente(1L, "Juan Pérez", 30, "Cantante", "Guitarra", agrupacion, agrupacion);
 
         Mockito.when(componenteRepository.findById(1L)).thenReturn(Optional.of(componente));
         Mockito.when(componenteRepository.findAll()).thenReturn(List.of(componente));

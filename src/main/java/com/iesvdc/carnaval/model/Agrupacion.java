@@ -32,7 +32,7 @@ public class Agrupacion {
 
     @OneToOne (fetch = FetchType.EAGER)
     @JoinColumn(name = "director_id", unique = true)
-    private Componente director; // relación 1 a 1
+    private Componente director = null; // relación 1 a 1
 
     @OneToMany(mappedBy = "agrupacion", cascade = CascadeType.ALL)
     private List<Componente> componentes = new ArrayList<>(); // Relacion 1 a muchos

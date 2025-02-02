@@ -55,6 +55,8 @@ public class ComponenteController {
 
         Agrupacion agrupacion = agrupacionService.obtenerAgrupacionPorId(componente.getAgrupacion().getId()).get();
 
+        componenteService.guardarComponente(componente);
+
         if (componente.getRol().equals("Director")) {
             if (agrupacion.getDirector() != null){
                 // si la agrupacion ya tiene director lanza un error
@@ -62,11 +64,9 @@ public class ComponenteController {
                 model.addAttribute("agrupacion", agrupacion);
                 return "anadir_componente";  // Volver al formulario con el error
             }
-            // Guardar el componente primero, si no está guardado
-            componenteService.guardarComponente(componente);
             agrupacion.setDirector(componente);
-        }
 
+        }
         agrupacion.setNumeroDeComponentes(agrupacion.getNumeroDeComponentes() + 1);
         agrupacionService.guardarAgrupacion(agrupacion);
 

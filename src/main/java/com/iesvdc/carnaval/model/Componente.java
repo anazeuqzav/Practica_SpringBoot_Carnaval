@@ -37,19 +37,31 @@ public class Componente {
     public Componente() {
     }
 
-    public Componente(long id, String nombre, String rol, Agrupacion agrupacion) {
-        this.id = id;
-        this.nombre = nombre;
-        this.rol = rol;
-        this.agrupacion = agrupacion;
-    }
 
-    public Componente(long id, String nombre, Integer edad, String rol, String instrumento, Agrupacion agrupacion) {
+    public Componente(long id, String nombre, int edad, String rol, String instrumento, Agrupacion agrupacion) {
         this.id = id;
         this.nombre = nombre;
         this.edad = edad;
         this.rol = rol;
         this.instrumento = instrumento;
+        this.agrupacion = agrupacion;
+    }
+
+
+    public Componente(long id, String nombre, Integer edad, String rol, String instrumento, Agrupacion agrupacionDirigida, Agrupacion agrupacion) {
+        this.id = id;
+        this.nombre = nombre;
+        this.edad = edad;
+        this.rol = rol;
+        this.instrumento = instrumento;
+        this.agrupacionDirigida = agrupacionDirigida;
+        this.agrupacion = agrupacion;
+    }
+
+    public Componente(long id, String nombre, String rol, Agrupacion agrupacion) {
+        this.id = id;
+        this.nombre = nombre;
+        this.rol = rol;
         this.agrupacion = agrupacion;
     }
 
@@ -117,7 +129,6 @@ public class Componente {
                 ", edad=" + edad +
                 ", rol='" + rol + '\'' +
                 ", instrumento='" + instrumento + '\'' +
-                ", agrupacionDirigida=" + agrupacionDirigida +
                 '}';
     }
 }
