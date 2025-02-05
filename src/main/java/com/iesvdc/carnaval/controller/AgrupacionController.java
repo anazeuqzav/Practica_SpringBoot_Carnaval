@@ -30,7 +30,7 @@ public class AgrupacionController {
 
     @GetMapping("/")
     public String index() {
-        return "index";
+        return "login";
     }
 
     // Método para mostrar una lista de agrupaciones

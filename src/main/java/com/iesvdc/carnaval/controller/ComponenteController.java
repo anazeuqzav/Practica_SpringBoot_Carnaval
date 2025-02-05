@@ -55,7 +55,12 @@ public class ComponenteController {
 
         Agrupacion agrupacion = agrupacionService.obtenerAgrupacionPorId(componente.getAgrupacion().getId()).get();
 
-        componenteService.guardarComponente(componente);
+        // Comprobación del número máximo de componentes de la agrupación
+        if (agrupacion.getNumeroDeComponentes() >= agrupacion.getCapacidadMaxima()) {
+            model.addAttribute("agrupaciones", agrupacionService.listarAgrupaciones());
+            model.addAttribute("error", "La agrupación seleccionada está llena.");
+            return "anadir_componente";
+        }
 
         if (componente.getRol().equals("Director")) {
             if (agrupacion.getDirector() != null){
@@ -64,6 +69,7 @@ public class ComponenteController {
                 model.addAttribute("agrupacion", agrupacion);
                 return "anadir_componente";  // Volver al formulario con el error
             }
+            componenteService.guardarComponente(componente);
             agrupacion.setDirector(componente);
 
         }
@@ -127,29 +133,25 @@ public class ComponenteController {
             model.addAttribute("agrupaciones", agrupacionService.listarAgrupaciones());
             return "editar_componente";
         }
+
         Agrupacion nuevaAgrupacion = nuevaAgrupacionOptional.get();
 
-        // Comprobación del número máximo de componentes de la agrupación
-        if (nuevaAgrupacion.getNumeroDeComponentes() >= nuevaAgrupacion.getCapacidadMaxima()) {
-            model.addAttribute("agrupaciones", agrupacionService.listarAgrupaciones());
-            model.addAttribute("error", "La agrupación seleccionada está llena.");
-            return "editar_componente";
-        }
-
-        // Si el componente es director y ya hay un director en la nueva agrupación, mostrar error
-        if (componente.getRol().equals("Director")) {
-            if (nuevaAgrupacion.getDirector() != null) {
-                model.addAttribute("agrupaciones", agrupacionService.listarAgrupaciones());
-                model.addAttribute("error", "Ya existe un director en esta agrupación.");
-                return "editar_componente";
+        if (agrupacionAnterior.getDirector().getId() != componente.getId()) {
+            // Si el componente es director y ya hay un director en la nueva agrupación, mostrar error
+            if (componente.getRol().equals("Director")) {
+                if (nuevaAgrupacion.getDirector() != null) {
+                    model.addAttribute("agrupaciones", agrupacionService.listarAgrupaciones());
+                    model.addAttribute("error", "Ya existe un director en esta agrupación.");
+                    return "editar_componente";
+                }
+                nuevaAgrupacion.setDirector(componente);
             }
-            nuevaAgrupacion.setDirector(componente);
+            // Si el componente era director en la agrupación anterior, quitarlo
+            if (componenteOriginal.getRol().equals("Director")) {
+                agrupacionAnterior.setDirector(null);
+            }
         }
 
-        // Si el componente era director en la agrupación anterior, quitarlo
-        if (componenteOriginal.getRol().equals("Director")) {
-            agrupacionAnterior.setDirector(null);
-        }
 
         // Actualizar los números de componentes en las agrupaciones
         if (agrupacionAnterior != null) {
