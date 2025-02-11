@@ -1,5 +1,8 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+>
+
 
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -44,11 +47,11 @@
                 <td th:text="${componente.instrumento != null ? componente.instrumento : 'N/A'}"></td>
 
                 <td>
-                    <a th:href="@{/componente/{id}(id=${componente.id})}">Ver</a>
-                    <a th:href="@{/componente/editar/{id}(id=${componente.id})}">Editar</a>
-                    <form th:action="@{/componente/eliminar/{id}(id=${componente.id})}" method="post"
+                    <a th:href="@{/user/componente/{id}(id=${componente.id})}">Ver</a>
+                    <a sec:authorize="hasAuthority('ROLE_ADMIN')"  th:href="@{/admin/componente/editar/{id}(id=${componente.id})}">Editar</a>
+                    <form th:action="@{/admin/componente/eliminar/{id}(id=${componente.id})}" method="post"
                         style="display:inline;">
-                        <button class="delete-agrupacion-button" type="submit"
+                        <button sec:authorize="hasAuthority('ROLE_ADMIN')" class="delete-agrupacion-button" type="submit"
                             onclick="return confirm('¿Estás segura de eliminar este componente?');">X</button>
                     </form>
                 </td>
@@ -56,7 +59,7 @@
         </tbody>
     </table>
     <!-- Añadir componente -->
-    <a class="btn-anadir" th:href="@{/componente/nuevo(idAgrupacion=${agrupacion.id})}" id="btnAgregarComponente"
+    <a sec:authorize="hasAuthority('ROLE_ADMIN')" class="btn-anadir" th:href="@{/admin/componente/nuevo(idAgrupacion=${agrupacion.id})}" id="btnAgregarComponente"
         th:data-num-componentes="${agrupacion.numeroDeComponentes}" th:data-modalidad="${agrupacion.modalidad}">Añadir
         componente</a>
 
@@ -105,24 +108,25 @@
                 <td th:text="${puntuacion.puntos}"></td>
 
                 <td>
-                    <a th:href="@{/puntuacion/{id}(id=${puntuacion.id})}">Ver</a>
-                    <a th:href="@{/puntuacion/editar/{id}(id=${puntuacion.id})}">Editar</a>
-                    <form th:action="@{/puntuacion/eliminar/{id}(id=${puntuacion.id})}" method="post"
+                    <a th:href="@{/user/puntuacion/{id}(id=${puntuacion.id})}">Ver</a>
+                    <a sec:authorize="hasAuthority('ROLE_ADMIN')" th:href="@{/admin/puntuacion/editar/{id}(id=${puntuacion.id})}">Editar</a>
+                    <form th:action="@{/admin/puntuacion/eliminar/{id}(id=${puntuacion.id})}" method="post"
                         style="display:inline;">
-                        <button class="delete-agrupacion-button" type="submit"
+                        <button sec:authorize="hasAuthority('ROLE_ADMIN')" class="delete-agrupacion-button" type="submit"
                             onclick="return confirm('¿Estás segura de eliminar esta puntuación?');">X</button>
                     </form>
                 </td>
             </tr>
 
+
         </tbody>
     </table>
-    <a class="btn-anadir" th:href="@{/puntuacion/nuevo(idAgrupacion=${agrupacion.id})}">Añadir puntuacion</a>
+    <a sec:authorize="hasAuthority('ROLE_ADMIN')" class="btn-anadir" th:href="@{/admin/puntuacion/nuevo(idAgrupacion=${agrupacion.id})}">Añadir puntuacion</a>
 
     <section class="container-links">
         <!-- Enlace para volver -->
-        <a href="/agrupaciones">Volver a agrupaciones</a>
-        <a href="/">Volver a inicio</a>
+        <a href="/user/agrupaciones">Volver a agrupaciones</a>
+        <a href="/auth/index">Volver a inicio</a>
 
     </section>
 </body>

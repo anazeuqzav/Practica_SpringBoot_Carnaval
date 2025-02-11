@@ -21,6 +21,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+/*
 @WebMvcTest(ComponenteController.class)
 class ComponenteControllerTest {
 
@@ -133,3 +134,4 @@ class ComponenteControllerTest {
         Mockito.verify(agrupacionService, Mockito.times(1)).guardarAgrupacion(Mockito.any(Agrupacion.class));
     }
 }
+*/

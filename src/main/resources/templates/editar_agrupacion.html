@@ -12,7 +12,7 @@
     <div class="form-body">
 
         <h1 class="title-form">Editar Agrupación</h1>
-        <form class="form" th:action="@{/agrupacion/editar}" th:object="${agrupacion}" method="post">
+        <form class="form" th:action="@{/admin/agrupacion/editar}" th:object="${agrupacion}" method="post">
             <input type="hidden" th:field="*{id}">
 
             <label for="nombre">Nombre:</label>
@@ -48,8 +48,8 @@
         </form>
         <section class="container-links">
 
-            <a th:href="@{/agrupacion/{id}(id=${agrupacion.id})}">Cancelar</a>
-            <a href="/">Volver al inicio</a>
+            <a th:href="@{/user/agrupacion/{id}(id=${agrupacion.id})}">Cancelar</a>
+            <a href="/auth/index">Volver al inicio</a>
 
         </section>
     </div>

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,6 +13,9 @@
     <header class="header-agrupaciones">
         <h1>Gestión de agrupaciones</h1>
     </header>
+
+    <p>Usuario: <span sec:authentication="name"></span></p>
+    <p>Rol: <span sec:authentication="authorities"></span></p>
 
     <!-- Contenedor envolvente para la tabla -->
     <div class="table-container">
@@ -36,11 +40,11 @@
                 <td data-label="Numero de Componentes" th:text="${agrupacion.numeroDeComponentes}"></td>
                 <td data-label="Localidad" th:text="${agrupacion.localidad}"></td>
                 <td data-label="Acciones">
-                    <a th:href="@{/agrupacion/{id}(id=${agrupacion.id})}">Ver</a>
-                    <a th:href="@{/agrupacion/editar/{id}(id=${agrupacion.id})}">Editar</a>
-                    <form class="delete-agrupacion-form" th:action="@{/agrupacion/eliminar/{id}(id=${agrupacion.id})}"
+                    <a th:href="@{/user/agrupacion/{id}(id=${agrupacion.id})}">Ver</a>
+                    <a sec:authorize="hasAuthority('ROLE_ADMIN')"  th:href="@{/admin/agrupacion/editar/{id}(id=${agrupacion.id})}">Editar</a>
+                    <form class="delete-agrupacion-form" th:action="@{/admin/agrupacion/eliminar/{id}(id=${agrupacion.id})}"
                           method="post" style="display:inline;">
-                        <button class="delete-agrupacion-button" type="submit"
+                        <button sec:authorize="hasAuthority('ROLE_ADMIN')"  class="delete-agrupacion-button" type="submit"
                                 onclick="return confirm('¿Estás segura de eliminar esta agrupación?');">X</button>
                     </form>
                 </td>
@@ -50,11 +54,10 @@
     </div>
 
     <section class="container-links">
-        <a href="/crear_agrupacion">Crear agrupacion</a>
-        <a href="/">Volver al inicio</a>
+        <a sec:authorize="hasAuthority('ROLE_ADMIN')" href="/admin/crear_agrupacion" >Crear agrupacion</a>
+        <a href="/auth/index">Volver al inicio</a>
     </section>
 
 </body>
-
 
 </html>

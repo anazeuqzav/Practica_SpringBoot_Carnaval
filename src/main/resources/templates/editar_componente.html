@@ -21,7 +21,7 @@
     </div>
 
     <!-- Formulario para editar el componente -->
-    <form class="form" th:action="@{/componente/editar}" th:object="${componente}" method="post">
+    <form class="form" th:action="@{/admin/componente/editar}" th:object="${componente}" method="post">
       <!-- ID del componente (oculto) -->
       <input type="hidden" th:field="*{id}" />
 
@@ -61,8 +61,8 @@
 
     <!-- Enlace para volver -->
     <section class="container-links">
-      <a th:href="@{'/agrupacion/' + ${componente.agrupacion.id}}">Cancelar</a>
-      <a href="/">Volver al inicio</a>
+      <a th:href="@{'/user/agrupacion/' + ${componente.agrupacion.id}}">Cancelar</a>
+      <a href="/auth/index">Volver al inicio</a>
     </section>
 
   </div>

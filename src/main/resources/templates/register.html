@@ -1,5 +1,8 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+>
+
 <head>
     <meta charset="UTF-8">
     <title>Registro de Usuario</title>
@@ -27,8 +30,8 @@
         <div class="mb-3">
             <label for="rol" class="form-label">Rol</label>
             <select id="rol" th:field="*{rol}" class="form-control">
-                <option value="ROLE_USER">Usuario</option>
-                <option value="ROLE_ADMIN">Administrador</option>
+                <option value="USER">Usuario</option>
+                <option value="ADMIN">Administrador</option>
             </select>
         </div>
 

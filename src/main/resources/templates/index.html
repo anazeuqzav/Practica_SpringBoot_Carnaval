@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,13 +17,17 @@
     <header class="header-index">
         <h1>Bienvenido al Carnaval de Cadiz 2025</h1>
     </header>
+
+    <p>Usuario: <span sec:authentication="name"></span></p>
+    <p>Rol: <span sec:authentication="authorities"></span></p>
+
     <div class="img-container">
         <img class="img-mascara" src="/images/mascara-icon.png" alt="carnaval mascara icon" />
     </div>
 
     <section class="container-links">
-        <a href="/agrupaciones">Gestión de agrupaciones</a>
-        <a href="/clasificacion">Ver clasificación</a>
+        <a href="/user/agrupaciones">Gestión de agrupaciones</a>
+        <a href="/user/clasificacion">Ver clasificación</a>
     </section>
 
 

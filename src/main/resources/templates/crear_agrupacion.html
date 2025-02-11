@@ -11,7 +11,7 @@
 <body>
   <div class="form-body">
     <h1 class="title-form">Crear Agrupación</h1>
-    <form class="form" th:action="@{/crear_agrupacion}" th:object="${agrupacion}" method="post">
+    <form class="form" th:action="@{/admin/crear_agrupacion}" th:object="${agrupacion}" method="post">
 
 
 
@@ -45,8 +45,8 @@
     </form>
 
     <section class="container-links">
-      <a href="/agrupaciones">Cancelar</a>
-      <a href="/">Volver al inicio</a>
+      <a href="/user/agrupaciones">Cancelar</a>
+      <a href="/auth/index">Volver al inicio</a>
     </section>
   </div>
 </body>

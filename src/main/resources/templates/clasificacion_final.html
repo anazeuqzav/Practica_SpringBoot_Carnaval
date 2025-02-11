@@ -11,7 +11,7 @@
 <h1>Clasificación Final</h1>
 
 <!-- Filtro por modalidad -->
-<form class="form-clasificacion" th:action="@{/clasificacion}" method="get">
+<form class="form-clasificacion" th:action="@{/user/clasificacion}" method="get">
     <label for="modalidad">Filtrar por modalidad:</label>
     <select id="modalidad" name="modalidad">
         <option th:each="modalidad : ${modalidades}"
@@ -55,7 +55,7 @@
     </tbody>
 </table>
 <section class="container-links">
-    <a href="/">Volver al inicio</a>
+    <a href="/auth/index">Volver al inicio</a>
 </section>
 </body>
 

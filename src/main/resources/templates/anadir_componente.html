@@ -12,7 +12,7 @@
   <div class="form-body">
 
     <h1 class="title-form">Añadir Componente</h1>
-    <form class="form" th:action="@{/componente/guardar}" th:object="${componente}" method="post">
+    <form class="form" th:action="@{/admin/componente/guardar}" th:object="${componente}" method="post">
       <!-- Campo oculto para asociar el componente a la agrupación -->
       <input type="hidden" th:field="*{agrupacion.id}">
 
@@ -39,7 +39,7 @@
       <button type="submit">Guardar</button>
     </form>
     <section class="container-links">
-      <a th:href="@{/agrupacion/{id}(id=${agrupacion.id})}">Cancelar</a>
+      <a th:href="@{/user/agrupacion/{id}(id=${agrupacion.id})}">Cancelar</a>
       <a href="/">Volver a inicio</a>
 
     </section>

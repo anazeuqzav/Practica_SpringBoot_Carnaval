@@ -14,7 +14,7 @@
     <h1 class="title-form" th:text="'Editar Puntuación: ' + ${puntuacion.id}"></h1>
 
     <!-- Formulario para editar la puntuación -->
-    <form class="form" th:action="@{/puntuacion/editar}" th:object="${puntuacion}" method="post">
+    <form class="form" th:action="@{/admin/puntuacion/editar}" th:object="${puntuacion}" method="post">
       <!-- ID de la puntuación (oculto) -->
       <input type="hidden" th:field="*{id}" />
 
@@ -47,8 +47,8 @@
 
     <section class="container-links">
       <!-- Enlace para volver -->
-      <a th:href="@{'/agrupacion/' + ${puntuacion.agrupacion.id}}">Cancelar</a>
-      <a href="/">Volver a inicio</a>
+      <a th:href="@{'/user/agrupacion/' + ${puntuacion.agrupacion.id}}">Cancelar</a>
+      <a href="/auth/index">Volver a inicio</a>
     </section>
   </div>
 

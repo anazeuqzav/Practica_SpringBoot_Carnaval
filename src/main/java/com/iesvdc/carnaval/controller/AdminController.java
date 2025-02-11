@@ -1,33 +1,111 @@
 package com.iesvdc.carnaval.controller;
 
-import com.iesvdc.carnaval.model.Componente;
+
 import com.iesvdc.carnaval.model.Agrupacion;
+import com.iesvdc.carnaval.model.Componente;
+import com.iesvdc.carnaval.model.Fase;
+import com.iesvdc.carnaval.model.Puntuacion;
 import com.iesvdc.carnaval.service.AgrupacionService;
 import com.iesvdc.carnaval.service.ComponenteService;
+import com.iesvdc.carnaval.service.PuntuacionService;
 import jakarta.validation.Valid;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import jakarta.validation.constraints.*;
-
 
 import java.util.Optional;
 
-/**
- * Manejo de las peticions HTTP
- */
-
 @Controller
-public class ComponenteController {
+@RequestMapping("/admin")
+@PreAuthorize("hasRole('ADMIN')")
+public class AdminController {
 
-    private final ComponenteService componenteService;
     private final AgrupacionService agrupacionService;
+    private final ComponenteService componenteService;
+    private final PuntuacionService puntuacionService;
 
-    public ComponenteController(ComponenteService componenteService, AgrupacionService agrupacionService) {
-        this.componenteService = componenteService;
+
+    public AdminController(AgrupacionService agrupacionService, ComponenteService componenteService, PuntuacionService puntuacionService) {
         this.agrupacionService = agrupacionService;
+        this.componenteService = componenteService;
+        this.puntuacionService = puntuacionService;
     }
+
+    /** AGRUPACIONES **/
+
+    // Página para crear un agrupacion
+    @GetMapping("/crear_agrupacion")
+    public String mostrarFormularioCrearAgrupacion(Model model) {
+        model.addAttribute("agrupacion", new Agrupacion());
+        return "crear_agrupacion";
+    }
+
+    // Manejar la creación de un agrupacion
+    @PostMapping("/crear_agrupacion")
+    public String crearAgrupacion(@ModelAttribute("agrupacion") Agrupacion agrupacion, BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            return "crear_agrupacion";
+        }
+        agrupacionService.guardarAgrupacion(agrupacion);
+        return "redirect:/agrupaciones";
+    }
+
+    // Eliminar una agrupacion
+    @PostMapping("/agrupacion/eliminar/{id}")
+    public String eliminarAgrupacion(@PathVariable Long id, Model model) {
+        agrupacionService.eliminarAgrupacion(id);
+        model.addAttribute("mensaje", "Agrupación eliminada correctamente");
+        return "redirect:/agrupaciones";
+    }
+
+    // Mostrar el formulario de edición con los datos actuales del producto
+    @GetMapping("/agrupacion/editar/{id}")
+    public String mostrarFormularioEditar(@PathVariable Long id, Model model) {
+        Optional<Agrupacion> agrupacionOptional = agrupacionService.obtenerAgrupacionPorId(id);
+        if (agrupacionOptional.isPresent()) {
+            Agrupacion agrupacion = agrupacionOptional.get();
+            model.addAttribute("agrupacion", agrupacion);
+            model.addAttribute("componentes", agrupacion.getComponentes());
+            return "editar_agrupacion";
+        }
+        return "redirect:/agrupaciones"; // Si no se encuentra el producto, vuelve al catálogo
+    }
+
+    // Manejar la edición de la agrupación
+    @PostMapping("/agrupacion/editar")
+    public String editarProducto(@ModelAttribute("agrupacion") Agrupacion agrupacion, BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            return "editar_agrupacion"; // Vuelve al formulario si hay errores
+        }
+        // Recuperar la agrupación original desde la base de datos
+        Agrupacion agrupacionOriginal = agrupacionService.obtenerAgrupacionPorId(agrupacion.getId()).get();
+
+        // Recuperar el director anterior
+        Componente directorAnterior = agrupacionOriginal.getDirector();
+
+        // Solo quitar el rol si hay un director
+        if (directorAnterior != null) {
+            directorAnterior.setRol(null); // O el valor por defecto
+            componenteService.guardarComponente(directorAnterior); // Guardar cambios
+        } // Guardar cambios
+
+
+        // Asignar el rol de director al nuevo componente seleccionado (si existe)
+        if (agrupacion.getDirector() != null) {
+            Componente nuevoDirector = componenteService.obtenerComponentePorId(agrupacion.getDirector().getId()).get();
+            nuevoDirector.setRol("Director");
+            componenteService.guardarComponente(nuevoDirector);
+        }
+
+        // Guardar los cambios en la agrupación
+        agrupacionService.guardarAgrupacion(agrupacion); // Actualiza el producto
+        model.addAttribute("mensaje", "Agrupacion editada correctamente");
+        return "redirect:/agrupaciones"; // Redirige al catálogo
+    }
+
+    /** COMPONENTES **/
 
     // Mostrar formulario para añadir componente
     @GetMapping("/componente/nuevo")
@@ -76,23 +154,9 @@ public class ComponenteController {
         agrupacion.setNumeroDeComponentes(agrupacion.getNumeroDeComponentes() + 1);
         agrupacionService.guardarAgrupacion(agrupacion);
 
-        return "redirect:/agrupacion/" + componente.getAgrupacion().getId(); // Volver al detalle de la agrupación
+        return "redirect:/user/agrupacion/" + componente.getAgrupacion().getId(); // Volver al detalle de la agrupación
     }
 
-    // Ver detalle del componente
-    @GetMapping("/componente/{id}")
-    public String mostrarDetalleComponente(@PathVariable("id") Long id, Model model) {
-        Optional<Componente> componenteOptional = componenteService.obtenerComponentePorId(id);
-        if (componenteOptional.isPresent()) {
-            model.addAttribute("componente", componenteOptional.get());
-            return "detalle_componente";
-        } else {
-            // Redirigir a un error o página de inicio si no se encuentra el componente
-            return "redirect:/";
-        }
-    }
-
-    // Formulario para editar componente
     @GetMapping("/componente/editar/{id}")
     public String mostrarFormularioEditarComponente(@PathVariable Long id, Model model) {
         Optional<Componente> componenteOptional = componenteService.obtenerComponentePorId(id);
@@ -167,12 +231,12 @@ public class ComponenteController {
         // Guardar el componente actualizado
         componenteService.guardarComponente(componente);
 
-        return "redirect:/agrupacion/" + nuevaAgrupacion.getId();
+        return "redirect:/user/agrupacion/" + nuevaAgrupacion.getId();
     }
 
     // Eliminar una componente
     @PostMapping("/componente/eliminar/{id}")
-    public String eliminarAgrupacion(@PathVariable Long id, Model model) {
+    public String eliminarComponente(@PathVariable Long id, Model model) {
         Optional<Componente> componenteOptional = componenteService.obtenerComponentePorId(id);
         Componente componente = null;
         if (componenteOptional.isPresent()) {
@@ -187,7 +251,78 @@ public class ComponenteController {
         }
         componenteService.eliminarComponente(id);
         model.addAttribute("mensaje", "Componente eliminada correctamente");
-        return "redirect:/agrupacion/" + componente.getAgrupacion().getId();
+        return "redirect:/user/agrupacion/" + componente.getAgrupacion().getId();
     }
+
+    /** PUNTUACIÓN **/
+
+    // Mostrar formulario para añadir componente
+    @GetMapping("/puntuacion/nuevo")
+    public String mostrarFormularioPuntuacion(@RequestParam("idAgrupacion") Long idAgrupacion, Model model) {
+        Puntuacion puntuacion = new Puntuacion();
+        Agrupacion agrupacion = agrupacionService.obtenerAgrupacionPorId(idAgrupacion).get();
+        puntuacion.setAgrupacion(agrupacion);
+
+        model.addAttribute("puntuacion", puntuacion);
+        model.addAttribute("agrupacion", agrupacion);
+        model.addAttribute("fases", Fase.values());
+
+        return "anadir_puntuacion"; // Vista del formulario
+    }
+
+    // Manejar la creación de un agrupacion
+    @PostMapping("/puntuacion/guardar")
+    public String anadirPuntuacion(@Valid @ModelAttribute("puntuacion") Puntuacion puntuacion,
+                                   BindingResult result, Model model) {
+        // Verificar si hay errores de validación
+        if (result.hasErrors()) {
+            return "anadir_puntuacion"; // Si hay errores, mostrar el formulario de nuevo
+        }
+
+        // Verificar que la agrupación no sea nula
+        if (puntuacion.getAgrupacion() == null) {
+            model.addAttribute("error", "La agrupación no puede ser nula");
+            return "anadir_puntuacion"; // Mostrar el formulario con un mensaje de error
+        }
+
+        // Guardar la puntuación
+        puntuacionService.guardarPuntuacion(puntuacion);
+
+        // Redirigir a la página de detalles de la agrupación
+        return "redirect:/user/agrupacion/" + puntuacion.getAgrupacion().getId();
+    }
+
+    // Formulario para editar componente
+    @GetMapping("/puntuacion/editar/{id}")
+    public String mostrarFormularioEditarPuntuacion(@PathVariable Long id, Model model) {
+        Optional <Puntuacion> puntuacionOptional = puntuacionService.obtenerPuntuacionPorId(id);
+        if (puntuacionOptional.isPresent()) {
+            model.addAttribute("puntuacion", puntuacionOptional.get());
+            model.addAttribute("agrupaciones", agrupacionService.listarAgrupaciones());
+            return "editar_puntuacion";
+        } else {
+            return "redirect:/";
+        }
+    }
+
+    // Manejar editar componente
+    @PostMapping("/puntuacion/editar")
+    public String guardarCambios(@ModelAttribute Puntuacion puntuacion) {
+        puntuacionService.guardarPuntuacion(puntuacion);
+        return "redirect:/user/agrupacion/" + puntuacion.getAgrupacion().getId();
+    }
+
+    // Eliminar una puntuacion
+    @PostMapping("/puntuacion/eliminar/{id}")
+    public String eliminarPuntuacion(@PathVariable Long id, Model model) {
+        long agrupacionId = puntuacionService.obtenerPuntuacionPorId(id).get().getAgrupacion().getId();
+        puntuacionService.eliminarPuntuacion(id);
+        model.addAttribute("mensaje", "Puntuacion eliminada correctamente");
+        return "redirect:/user/agrupacion/" + agrupacionId;
+    }
+
+
+
+
 
 }

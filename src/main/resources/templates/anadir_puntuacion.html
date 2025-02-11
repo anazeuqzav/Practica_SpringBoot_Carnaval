@@ -13,7 +13,7 @@
 
     <h1 class="title-form">Añadir Puntuación</h1>
 
-    <form class="form" th:action="@{/puntuacion/guardar}" th:object="${puntuacion}" method="post">
+    <form class="form" th:action="@{/admin/puntuacion/guardar}" th:object="${puntuacion}" method="post">
       <!-- Campo oculto para asociar la puntuación a la agrupación -->
       <input type="hidden" th:field="*{agrupacion.id}">
 
@@ -32,7 +32,7 @@
     </form>
 
     <section class="container-links">
-      <a th:href="@{'/agrupacion/' + ${puntuacion.agrupacion.id}}">Cancelar</a>
+      <a th:href="@{'/user/agrupacion/' + ${puntuacion.agrupacion.id}}">Cancelar</a>
       <a href="/">Volver al inicio</a>
     </section>
   </div>

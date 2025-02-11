@@ -15,6 +15,8 @@ public class AuthController {
     @Autowired
     private UsuarioService usuarioService;
 
+
+
     /**
      * Muestra el formulario de registro.
      * @param model Modelo de Thymeleaf para pasar el objeto usuario.
